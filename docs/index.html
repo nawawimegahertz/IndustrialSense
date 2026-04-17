@@ -1159,16 +1159,16 @@
                 <a href="https://github.com/nawawimegahertz/IndustrialSense" target="_blank">GitHub</a>
                 <div class="lang-switcher">
                     <button class="lang-btn" onclick="toggleLangMenu()" aria-label="Change language">
-                        <span id="currentLangLabel">EN</span>
+                        <span id="currentLangLabel">🇬🇧</span>
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="lang-dropdown" id="langDropdown">
                         <button class="lang-option active" onclick="setLanguage('en')">
-                            EN &nbsp;English
+                            🇬🇧 &nbsp;English
                             <span class="check">&#x2713;</span>
                         </button>
                         <button class="lang-option" onclick="setLanguage('id')">
-                            ID &nbsp;Bahasa Indonesia
+                            🇮🇩 &nbsp;Bahasa Indonesia
                             <span class="check">&#x2713;</span>
                         </button>
                     </div>
@@ -1224,7 +1224,7 @@
         <section id="features">
             <div class="container-wide">
                 <div class="section-label fade-in" data-i18n="feat_label">The problem</div>
-                <h2 class="section-title fade-in" data-i18n-html="feat_title">Raw <code>analogRead()</code> is never enough.</h2>
+                <h2 class="section-title fade-in" data-i18n="feat_title">Raw <code>analogRead()</code> is never enough.</h2>
                 <p class="section-desc fade-in" data-i18n="feat_desc">
                     You've been there — ADC noise produces phantom readings, 
                     the sensor drifts after 30 minutes, and recalibration means 
@@ -1283,7 +1283,7 @@
                         <thead>
                             <tr>
                                 <th data-i18n="cmp_th_feature">Feature</th>
-                                <th data-i18n-html="cmp_th_raw">Raw <code>analogRead()</code></th>
+                                <th data-i18n="cmp_th_raw">Raw <code>analogRead()</code></th>
                                 <th data-i18n="cmp_th_typical">Typical Libraries</th>
                                 <th>IndustrialSense</th>
                             </tr>
@@ -1335,7 +1335,7 @@
                                 <td data-i18n="cmp_r8_feature">External ADC support</td>
                                 <td>&#x2717;</td>
                                 <td>&#x2717;</td>
-                                <td data-i18n-html="cmp_r8_is">&#x2713; <i>Function pointer</i> injection</td>
+                                <td data-i18n="cmp_r8_is">&#x2713; <i>Function pointer</i> injection</td>
                             </tr>
                             <tr>
                                 <td data-i18n="cmp_r9_feature">Beginner-friendly</td>
@@ -1392,7 +1392,7 @@
                 </div>
 
                 <div class="callout callout-info fade-in">
-                    <span data-i18n-html="qs_callout"><strong>Under the hood,</strong> each <code>read()</code> call runs the full pipeline: oversample → filter → convert → deadzone → smooth. You get lab-grade readings from a $2 sensor.</span>
+                    <span data-i18n="qs_callout"><strong>Under the hood,</strong> each <code>read()</code> call runs the full pipeline: oversample → filter → convert → deadzone → smooth. You get lab-grade readings from a $2 sensor.</span>
                 </div>
             </div>
         </section>
@@ -1777,7 +1777,7 @@ Storage Pipeline:
                     <a href="https://github.com/nawawimegahertz/IndustrialSense/issues" target="_blank">Issues</a>
                     <a href="https://github.com/nawawimegahertz/IndustrialSense/releases" target="_blank">Releases</a>
                 </div>
-                <p data-i18n-html="footer_text">
+                <p data-i18n="footer_text">
                     IndustrialSense is an open-source project under the MIT License.<br>
                     Made by <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>
                 </p>
@@ -2035,18 +2035,10 @@ Storage Pipeline:
             currentLang = lang;
             localStorage.setItem('lang', lang);
 
-            // Update all data-i18n elements (textContent)
+            // Update all translatable elements (innerHTML for HTML support)
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-
-            // Update all data-i18n-html elements (innerHTML — for bold, links, etc.)
-            document.querySelectorAll('[data-i18n-html]').forEach(el => {
-                const key = el.getAttribute('data-i18n-html');
-                if (translations[lang][key]) {
+                if (translations[lang][key] !== undefined) {
                     el.innerHTML = translations[lang][key];
                 }
             });
@@ -2054,8 +2046,8 @@ Storage Pipeline:
             // Update HTML lang attribute
             document.documentElement.setAttribute('lang', lang);
 
-            // Update nav label
-            document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+            // Update nav label with flag
+            document.getElementById('currentLangLabel').innerHTML = lang === 'id' ? '🇮🇩' : '🇬🇧';
 
             // Update dropdown active state
             document.querySelectorAll('.lang-option').forEach(opt => {
