@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndustrialSense — Industrial-Grade Power Monitoring for Arduino & ESP32</title>
+    <meta name="description" content="Production-ready Arduino library with Adaptive Kalman Filtering, multi-point calibration, and cross-platform persistent storage for ACS712/ACS758 current sensors and voltage dividers.">
+    <meta name="keywords" content="Arduino, ESP32, ACS712, ACS758, Kalman Filter, power monitoring, current sensor, voltage sensor, embedded systems">
+    <meta name="author" content="nawawimegahertz">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="IndustrialSense Library">
+    <meta property="og:description" content="Industrial-grade power monitoring for Arduino & ESP32">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================================
+           DESIGN SYSTEM — Apple × Notion Minimalist
+           ================================================================ */
+        :root {
+            /* Colors — Light Theme */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F7F7F8;
+            --bg-tertiary: #F0F0F2;
+            --bg-code: #F5F5F7;
+            --bg-code-header: #EAEAEC;
+            --bg-hero-gradient: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+            --bg-card: #FFFFFF;
+            --bg-card-hover: #FAFAFA;
+            --bg-nav: rgba(255, 255, 255, 0.72);
+            --bg-badge: #F0F0F2;
+
+            --text-primary: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --text-tertiary: #86868B;
+            --text-code: #1D1D1F;
+
+            --border-primary: #D2D2D7;
+            --border-subtle: #E8E8ED;
+            --border-code: #E5E5EA;
+
+            --accent: #0071E3;
+            --accent-hover: #0077ED;
+            --accent-subtle: rgba(0, 113, 227, 0.08);
+            --accent-glow: rgba(0, 113, 227, 0.12);
+
+            --green: #34C759;
+            --orange: #FF9F0A;
+            --red: #FF3B30;
+            --purple: #AF52DE;
+            --teal: #5AC8FA;
+
+            /* Syntax highlighting — Light */
+            --syn-keyword: #AD3DA4;
+            --syn-string: #D12F1B;
+            --syn-comment: #8E8E93;
+            --syn-function: #326DA8;
+            --syn-number: #1C00CF;
+            --syn-type: #0B4F79;
+            --syn-directive: #643820;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --space-4xl: 96px;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+
+            /* Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.10);
+
+            /* Nav */
+            --nav-height: 52px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1C1C1E;
+            --bg-tertiary: #2C2C2E;
+            --bg-code: #1C1C1E;
+            --bg-code-header: #2C2C2E;
+            --bg-hero-gradient: linear-gradient(180deg, #0A0A0A 0%, #000000 100%);
+            --bg-card: #1C1C1E;
+            --bg-card-hover: #252528;
+            --bg-nav: rgba(0, 0, 0, 0.72);
+            --bg-badge: #2C2C2E;
+
+            --text-primary: #F5F5F7;
+            --text-secondary: #A1A1A6;
+            --text-tertiary: #86868B;
+            --text-code: #F5F5F7;
+
+            --border-primary: #3A3A3C;
+            --border-subtle: #2C2C2E;
+            --border-code: #3A3A3C;
+
+            --accent: #2997FF;
+            --accent-hover: #40A8FF;
+            --accent-subtle: rgba(41, 151, 255, 0.10);
+            --accent-glow: rgba(41, 151, 255, 0.15);
+
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.5);
+
+            --syn-keyword: #FC5FA3;
+            --syn-string: #FC6A5D;
+            --syn-comment: #6C7986;
+            --syn-function: #67B7A4;
+            --syn-number: #D0BF69;
+            --syn-type: #5DD8FF;
+            --syn-directive: #FFA14F;
+        }
+
+        /* ================================================================
+           RESET & BASE
+           ================================================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        img { max-width: 100%; }
+
+        /* ================================================================
+           NAVIGATION — Frosted glass navbar (Apple style)
+           ================================================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: var(--bg-nav);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--border-subtle);
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-lg);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .nav-logo svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ================================================================
+           LAYOUT
+           ================================================================ */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .container-wide {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        main {
+            padding-top: var(--nav-height);
+        }
+
+        section {
+            padding: var(--space-4xl) 0;
+        }
+
+        /* ================================================================
+           HERO — Large centered text (Apple keynote style)
+           ================================================================ */
+        .hero {
+            background: var(--bg-hero-gradient);
+            text-align: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 6px 14px;
+            background: var(--bg-badge);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            border: 0.5px solid var(--border-subtle);
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 64px);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.05;
+            color: var(--text-primary);
+            margin-bottom: var(--space-lg);
+            animation: fadeInUp 0.6s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(17px, 2.5vw, 20px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto var(--space-xl);
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            animation: fadeInUp 0.6s ease 0.3s forwards;
+            opacity: 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #FFF;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            color: #FFF;
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0,113,227,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 0.5px solid var(--border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            transform: scale(1.02);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ================================================================
+           INSTALL BANNER
+           ================================================================ */
+        .install-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .install-code {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: var(--bg-code);
+            border: 0.5px solid var(--border-code);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .install-code:hover {
+            border-color: var(--accent);
+            background: var(--accent-subtle);
+        }
+
+        .install-code .copy-icon {
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+
+        .install-code:hover .copy-icon {
+            opacity: 1;
+        }
+
+        .install-code.copied::after {
+            content: 'Copied!';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-family: var(--font-sans);
+            animation: fadeInUp 0.3s ease;
+        }
+
+        /* ================================================================
+           FEATURE CARDS
+           ================================================================ */
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: var(--space-3xl);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 0.5px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+            font-size: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ================================================================
+           SENSORS TABLE
+           ================================================================ */
+        .table-wrapper {
+            overflow-x: auto;
+            border: 0.5px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 20px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-tertiary);
+            background: var(--bg-secondary);
+            border-bottom: 0.5px solid var(--border-subtle);
+        }
+
+        td {
+            padding: 14px 20px;
+            border-bottom: 0.5px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            background: var(--bg-code);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            color: var(--accent);
+            border: 0.5px solid var(--border-code);
+        }
+
+        /* ================================================================
+           CODE BLOCKS — IDE-style
+           ================================================================ */
+        .code-block {
+            background: var(--bg-code);
+            border: 0.5px solid var(--border-code);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: var(--space-lg) 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: var(--bg-code-header);
+            border-bottom: 0.5px solid var(--border-code);
+        }
+
+        .code-header-title {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .code-header-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-header-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-header-dots span:nth-child(1) { background: #FF5F57; }
+        .code-header-dots span:nth-child(2) { background: #FEBC2E; }
+        .code-header-dots span:nth-child(3) { background: #28C840; }
+
+        .code-copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .code-copy-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .code-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .code-body pre {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text-code);
+            white-space: pre;
+            margin: 0;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: var(--syn-keyword); font-weight: 500; }
+        .str { color: var(--syn-string); }
+        .cmt { color: var(--syn-comment); font-style: italic; }
+        .fn { color: var(--syn-function); }
+        .num { color: var(--syn-number); }
+        .tp { color: var(--syn-type); }
+        .dir { color: var(--syn-directive); }
+
+        /* ================================================================
+           COMMAND REFERENCE
+           ================================================================ */
+        .cmd-grid {
+            display: grid;
+            gap: var(--space-sm);
+        }
+
+        .cmd-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-card);
+            border: 0.5px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .cmd-item:hover {
+            border-color: var(--border-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .cmd-code {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            background: var(--accent-subtle);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cmd-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding-top: 3px;
+        }
+
+        /* ================================================================
+           API REFERENCE
+           ================================================================ */
+        .api-section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .api-class-name {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 0.5px solid var(--border-subtle);
+        }
+
+        .api-method {
+            padding: var(--space-lg) 0;
+            border-bottom: 0.5px solid var(--border-subtle);
+        }
+
+        .api-method:last-child {
+            border-bottom: none;
+        }
+
+        .api-method-sig {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .api-method-sig .return-type {
+            color: var(--syn-type);
+        }
+
+        .api-method-sig .method-name {
+            color: var(--syn-function);
+        }
+
+        .api-method-sig .params {
+            color: var(--text-secondary);
+        }
+
+        .api-method-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .api-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .badge-advanced {
+            background: rgba(175, 82, 222, 0.12);
+            color: var(--purple);
+        }
+
+        .badge-persistence {
+            background: rgba(52, 199, 89, 0.12);
+            color: var(--green);
+        }
+
+        /* ================================================================
+           ARCHITECTURE DIAGRAM
+           ================================================================ */
+        .arch-visual {
+            background: var(--bg-code);
+            border: 0.5px solid var(--border-code);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* ================================================================
+           FOOTER
+           ================================================================ */
+        .footer {
+            text-align: center;
+            padding: var(--space-3xl) 0;
+            border-top: 0.5px solid var(--border-subtle);
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        /* ================================================================
+           DIVIDER
+           ================================================================ */
+        .divider {
+            width: 40px;
+            height: 3px;
+            background: var(--border-primary);
+            border-radius: 2px;
+            margin: var(--space-3xl) 0;
+        }
+
+        /* ================================================================
+           CALLOUT BLOCKS
+           ================================================================ */
+        .callout {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin: var(--space-lg) 0;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .callout-info {
+            background: var(--accent-subtle);
+            border: 0.5px solid rgba(0,113,227,0.15);
+            color: var(--text-primary);
+        }
+
+        .callout-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: -1px;
+        }
+
+        /* ================================================================
+           SCROLL ANIMATIONS
+           ================================================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ================================================================
+           MOBILE RESPONSIVE
+           ================================================================ */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: var(--space-xs);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            section {
+                padding: var(--space-3xl) 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .cmd-item {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ================================================================
+           SCROLLBAR
+           ================================================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-primary);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================
+         NAVIGATION
+         ================================================================ -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                IndustrialSense
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#quickstart">Quick Start</a>
+                <a href="#sensors">Sensors</a>
+                <a href="#api">API</a>
+                <a href="#commands">Commands</a>
+                <a href="https://github.com/nawawimegahertz/IndustrialSense" target="_blank">GitHub</a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ================================================================
+             HERO
+             ================================================================ -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    v1.0.0 — Now on Arduino Library Manager
+                </div>
+                <h1>
+                    Power monitoring,<br>
+                    <span class="gradient-text">industrial grade.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    A production-ready Arduino library with Adaptive Kalman Filtering, 
+                    multi-point calibration, and cross-platform persistent storage.
+                </p>
+                <div class="hero-actions">
+                    <a href="#quickstart" class="btn btn-primary">
+                        Get Started
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                    <a href="https://github.com/nawawimegahertz/IndustrialSense" class="btn btn-secondary" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </div>
+                <div class="install-bar">
+                    <div class="install-code" onclick="copyInstall(this)" title="Click to copy">
+                        <span>Arduino IDE → Library Manager → Search "IndustrialSense"</span>
+                        <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             FEATURES
+             ================================================================ -->
+        <section id="features">
+            <div class="container-wide">
+                <div class="section-label fade-in">Capabilities</div>
+                <h2 class="section-title fade-in">Built for the real world.</h2>
+                <p class="section-desc fade-in">
+                    Every feature designed to handle high-EMI environments, FOC inverter noise, 
+                    and thermal drift — so your readings stay rock-solid.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Adaptive Kalman Filter</h3>
+                        <p>EKF-inspired filter with innovation gating. Skips covariance updates during stable periods to save CPU and lock zero-current readings.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">📐</div>
+                        <h3>Multi-Point Calibration</h3>
+                        <p>Up to 10 non-linear calibration points with segmented linear interpolation. Auto-sorted, with edge extrapolation for out-of-range values.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">💾</div>
+                        <h3>Persistent Storage</h3>
+                        <p>Calibration data survives reboots. ESP32 uses Preferences (NVS), AVR uses EEPROM with wear-leveling via update(). Zero user code required.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Auto-Zero Compensation</h3>
+                        <p>Detects stable zero-current conditions and automatically recalibrates the sensor offset to compensate for thermal drift.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">📊</div>
+                        <h3>64× Oversampling</h3>
+                        <p>Averages 64 ADC samples per read, gaining ~3 effective bits of resolution. Configurable from 1 to 256 samples.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🔌</div>
+                        <h3>Custom ADC Injection</h3>
+                        <p>Swap in external ADC chips (ADS1115, ADS1015) via function pointers. No library modification needed.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             QUICK START
+             ================================================================ -->
+        <section id="quickstart" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="section-label fade-in">Quick Start</div>
+                <h2 class="section-title fade-in">Three lines. That's it.</h2>
+                <p class="section-desc fade-in">
+                    Progressive disclosure — simple enough for beginners, 
+                    powerful enough for industrial deployments.
+                </p>
+
+                <div class="code-block fade-in">
+                    <div class="code-header">
+                        <div class="code-header-title">
+                            <div class="code-header-dots"><span></span><span></span><span></span></div>
+                            01_Basic_Usage.ino
+                        </div>
+                        <button class="code-copy-btn" onclick="copyCode(this)" title="Copy code">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="dir">#include</span> <span class="str">&lt;IndustrialSense.h&gt;</span>
+
+<span class="cmt">// Declare sensors — library auto-loads all defaults</span>
+<span class="tp">IndustrialCurrent</span> <span class="fn">currentSensor</span>(<span class="tp">ACS712_20A</span>, A0);
+<span class="tp">IndustrialVoltage</span> <span class="fn">voltageSensor</span>(A1, <span class="num">30000.0</span>, <span class="num">7500.0</span>);
+
+<span class="kw">void</span> <span class="fn">setup</span>() {
+    currentSensor.<span class="fn">begin</span>();
+    voltageSensor.<span class="fn">begin</span>();
+}
+
+<span class="kw">void</span> <span class="fn">loop</span>() {
+    <span class="tp">float</span> amps  = currentSensor.<span class="fn">read</span>();  <span class="cmt">// Filtered current</span>
+    <span class="tp">float</span> volts = voltageSensor.<span class="fn">read</span>();  <span class="cmt">// Smoothed voltage</span>
+    <span class="fn">delay</span>(<span class="num">500</span>);
+}</pre>
+                    </div>
+                </div>
+
+                <div class="callout callout-info fade-in">
+                    <span class="callout-icon">💡</span>
+                    <span><strong>Under the hood,</strong> each <code>read()</code> call performs: oversample → filter → convert → deadzone/smooth. All automatically.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             SENSORS
+             ================================================================ -->
+        <section id="sensors">
+            <div class="container">
+                <div class="section-label fade-in">Supported Hardware</div>
+                <h2 class="section-title fade-in">Sensors.</h2>
+                <p class="section-desc fade-in">
+                    Built-in profiles with datasheet-accurate sensitivity values. 
+                    Just pass the enum — parameters load automatically.
+                </p>
+
+                <div class="table-wrapper fade-in">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Enum</th>
+                                <th>Sensor</th>
+                                <th>Sensitivity</th>
+                                <th>Range</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>ACS712_05A</code></td>
+                                <td>ACS712 5A</td>
+                                <td>185 mV/A</td>
+                                <td>±5A</td>
+                            </tr>
+                            <tr>
+                                <td><code>ACS712_20A</code></td>
+                                <td>ACS712 20A</td>
+                                <td>100 mV/A</td>
+                                <td>±20A</td>
+                            </tr>
+                            <tr>
+                                <td><code>ACS712_30A</code></td>
+                                <td>ACS712 30A</td>
+                                <td>66 mV/A</td>
+                                <td>±30A</td>
+                            </tr>
+                            <tr>
+                                <td><code>ACS758_50B</code></td>
+                                <td>ACS758 50B (Bidirectional)</td>
+                                <td>40 mV/A</td>
+                                <td>±50A</td>
+                            </tr>
+                            <tr>
+                                <td><code>ACS758_100U</code></td>
+                                <td>ACS758 100U (Unidirectional)</td>
+                                <td>20 mV/A</td>
+                                <td>0–100A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-label fade-in">Wiring</div>
+                <h2 class="section-title fade-in">Voltage Divider.</h2>
+
+                <div class="arch-visual fade-in">Vin ───[ R1 = 30kΩ ]───┬───[ R2 = 7.5kΩ ]───GND
+                        │
+                        └──▶ A1 (ADC Input)
+
+Divider Ratio = (R1 + R2) / R2 = 37500 / 7500 = 5.0×
+Max Input (5V ref)   = 5.0 × 5.0 = 25.0 V
+Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             COMMANDS
+             ================================================================ -->
+        <section id="commands" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="section-label fade-in">Runtime Calibration</div>
+                <h2 class="section-title fade-in">Serial commands.</h2>
+                <p class="section-desc fade-in">
+                    Calibrate on the fly via Serial, MQTT, or Bluetooth. 
+                    No reflashing required.
+                </p>
+
+                <div class="cmd-grid fade-in">
+                    <div class="cmd-item">
+                        <span class="cmd-code">v12.5</span>
+                        <span class="cmd-desc">Read current ADC value and map it to 12.5V. Saves to persistent storage automatically. Supports up to 10 calibration points.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">v0</span>
+                        <span class="cmd-desc">Calibrate the zero-voltage reference point. Connect the input to GND, then send this command.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">auto</span>
+                        <span class="cmd-desc">Force the current sensor to read the zero-offset immediately. Compensates for thermal drift. Saves to EEPROM/NVS.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">reset</span>
+                        <span class="cmd-desc">Clear all calibration data from both RAM and persistent storage. Sensor returns to factory defaults.</span>
+                    </div>
+                </div>
+
+                <div class="code-block fade-in" style="margin-top: var(--space-xl);">
+                    <div class="code-header">
+                        <div class="code-header-title">
+                            <div class="code-header-dots"><span></span><span></span><span></span></div>
+                            Calibration Workflow
+                        </div>
+                        <button class="code-copy-btn" onclick="copyCode(this)" title="Copy code">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="cmt">// In your loop(), add this to enable serial commands:</span>
+<span class="kw">if</span> (Serial.<span class="fn">available</span>()) {
+    String cmd = Serial.<span class="fn">readStringUntil</span>(<span class="str">'\n'</span>);
+    voltageSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// Handles "v12.5", "reset"</span>
+    currentSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// Handles "auto", "reset"</span>
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             API REFERENCE
+             ================================================================ -->
+        <section id="api">
+            <div class="container">
+                <div class="section-label fade-in">Reference</div>
+                <h2 class="section-title fade-in">API.</h2>
+                <p class="section-desc fade-in">Complete method reference for both sensor classes.</p>
+
+                <!-- IndustrialCurrent API -->
+                <div class="api-section fade-in">
+                    <div class="api-class-name">IndustrialCurrent</div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">begin</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Initialize the sensor. Auto-detects ADC resolution, loads saved offset from persistent storage, seeds the Kalman filter.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">float</span> <span class="method-name">read</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Full pipeline: oversample → Kalman filter → convert to Amps → deadzone → auto-zero check. Returns filtered current in Amperes.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">float</span> <span class="method-name">readRaw</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Returns raw oversampled ADC value (before Kalman). Useful for diagnostics.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setKalmanProcessNoise</span><span class="params">(float Q)</span>
+                            <span class="api-badge badge-advanced">Advanced</span>
+                        </div>
+                        <div class="api-method-desc">Set process noise Q. Higher → trust measurements more (noisier output). Default: 0.01</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setKalmanMeasurementNoise</span><span class="params">(float R)</span>
+                            <span class="api-badge badge-advanced">Advanced</span>
+                        </div>
+                        <div class="api-method-desc">Set measurement noise R. Higher → trust model more (smoother but slower). Default: 0.5</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setKalmanInnovationThreshold</span><span class="params">(float rho)</span>
+                            <span class="api-badge badge-advanced">Advanced</span>
+                        </div>
+                        <div class="api-method-desc">Innovation threshold for adaptive skip. If |change| &lt; rho, skip full Kalman update. Set 0 to disable. Default: 0.5</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setOversampleCount</span><span class="params">(uint16_t count)</span>
+                        </div>
+                        <div class="api-method-desc">Number of ADC samples to average per read(). More = better resolution, slower. Default: 64</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setDeadzone</span><span class="params">(float amps)</span>
+                        </div>
+                        <div class="api-method-desc">Readings below this threshold are forced to 0.0A. Default: 0.20A</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">forceAutoZero</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Immediately recalibrate the zero offset using the current ADC reading.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setCustomADCFunction</span><span class="params">(CustomADCReadFunc func)</span>
+                            <span class="api-badge badge-advanced">Advanced</span>
+                        </div>
+                        <div class="api-method-desc">Inject a custom ADC read function. Signature: <code>int myRead(uint8_t pin)</code>. For external ADCs like ADS1115.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">saveCalibration</span><span class="params">()</span>
+                            <span class="api-badge badge-persistence">Persistence</span>
+                        </div>
+                        <div class="api-method-desc">Save current zero-offset to EEPROM/Preferences.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">bool</span> <span class="method-name">processCommand</span><span class="params">(const String&amp; cmd)</span>
+                        </div>
+                        <div class="api-method-desc">Parse and execute a calibration command string. Supports "auto" and "reset". Returns true if recognized.</div>
+                    </div>
+                </div>
+
+                <!-- IndustrialVoltage API -->
+                <div class="api-section fade-in">
+                    <div class="api-class-name">IndustrialVoltage</div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">begin</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Initialize the sensor. Loads calibration map, seeds EMA with initial reading.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">float</span> <span class="method-name">read</span><span class="params">()</span>
+                        </div>
+                        <div class="api-method-desc">Full pipeline: oversample → interpolation (or divider math) → EMA smooth. Returns voltage in Volts.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">bool</span> <span class="method-name">addCalibrationPoint</span><span class="params">(float realVoltage)</span>
+                        </div>
+                        <div class="api-method-desc">Auto-reads current ADC and maps it to the given voltage. Array is auto-sorted. Returns false if map is full (10 points).</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">setEmaAlpha</span><span class="params">(float alpha)</span>
+                        </div>
+                        <div class="api-method-desc">Set EMA smoothing factor. Range (0, 1]. Higher = less smoothing. Default: 0.15</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">void</span> <span class="method-name">saveCalibration</span><span class="params">()</span>
+                            <span class="api-badge badge-persistence">Persistence</span>
+                        </div>
+                        <div class="api-method-desc">Save all calibration points to EEPROM/Preferences.</div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-sig">
+                            <span class="return-type">bool</span> <span class="method-name">processCommand</span><span class="params">(const String&amp; cmd)</span>
+                        </div>
+                        <div class="api-method-desc">Parse a calibration command. Supports "v&lt;value&gt;" and "reset". Returns true if recognized.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             ARCHITECTURE
+             ================================================================ -->
+        <section style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="section-label fade-in">Internals</div>
+                <h2 class="section-title fade-in">Architecture.</h2>
+                <p class="section-desc fade-in">Clean OOP with separated concerns. No namespace pollution.</p>
+
+                <div class="arch-visual fade-in">IndustrialSense/
+├── library.properties          ← Arduino Library Manager metadata
+├── keywords.txt                ← IDE syntax highlighting
+├── src/
+│   ├── IndustrialSense.h       ← Public API surface (include this)
+│   ├── IndustrialCurrent.cpp   ← Adaptive Kalman + Auto-Zero + Deadzone
+│   ├── IndustrialVoltage.cpp   ← NL Interpolation + EMA Smoothing
+│   └── StorageManager.h        ← ESP32 Preferences / AVR EEPROM
+└── examples/
+    ├── 01_Basic_Usage/         ← Level 1: 3-line simplicity
+    └── 02_Advanced_Calibration/← Level 2: Serial commands, Kalman tuning</div>
+
+                <div class="divider"></div>
+
+                <div class="section-label fade-in">Signal Pipeline</div>
+
+                <div class="arch-visual fade-in" style="margin-top: var(--space-lg);">Current Sensor Pipeline:
+  ADC Pin → [Oversample 64×] → [Adaptive Kalman] → [ADC→Amps] → [Deadzone] → [Auto-Zero] → Output
+
+Voltage Sensor Pipeline:
+  ADC Pin → [Oversample 32×] → [NL Interpolation / Divider Math] → [EMA Smooth] → Output
+
+Storage Pipeline:
+  processCommand() → save() → ┌─ ESP32: Preferences (NVS)
+                               └─ AVR:   EEPROM.update()</div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             FOOTER
+             ================================================================ -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-links">
+                    <a href="https://github.com/nawawimegahertz/IndustrialSense" target="_blank">GitHub</a>
+                    <a href="https://github.com/nawawimegahertz/IndustrialSense/issues" target="_blank">Issues</a>
+                    <a href="https://github.com/nawawimegahertz/IndustrialSense/releases" target="_blank">Releases</a>
+                </div>
+                <p>
+                    IndustrialSense is an open-source project under the MIT License.<br>
+                    Made by <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>
+                </p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ================================================================
+         JAVASCRIPT
+         ================================================================ -->
+    <script>
+        // ----------------------------------------------------------------
+        //  THEME TOGGLE
+        // ----------------------------------------------------------------
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcons(next);
+        }
+
+        function updateThemeIcons(theme) {
+            const sun = document.querySelector('.icon-sun');
+            const moon = document.querySelector('.icon-moon');
+            if (theme === 'dark') {
+                sun.style.display = 'none';
+                moon.style.display = 'block';
+            } else {
+                sun.style.display = 'block';
+                moon.style.display = 'none';
+            }
+        }
+
+        // Load saved theme
+        (function() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+                updateThemeIcons(saved);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateThemeIcons('dark');
+            }
+        })();
+
+        // ----------------------------------------------------------------
+        //  COPY FUNCTIONALITY
+        // ----------------------------------------------------------------
+        function copyInstall(el) {
+            navigator.clipboard.writeText('IndustrialSense');
+            el.classList.add('copied');
+            setTimeout(() => el.classList.remove('copied'), 1500);
+        }
+
+        function copyCode(btn) {
+            const codeBlock = btn.closest('.code-block');
+            const code = codeBlock.querySelector('pre').textContent;
+            navigator.clipboard.writeText(code);
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+            setTimeout(() => {
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+            }, 1500);
+        }
+
+        // ----------------------------------------------------------------
+        //  SCROLL ANIMATIONS
+        // ----------------------------------------------------------------
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ----------------------------------------------------------------
+        //  SMOOTH SCROLL for nav links
+        // ----------------------------------------------------------------
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 60;
+                    const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: position, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ----------------------------------------------------------------
+        //  NAV BACKGROUND on scroll
+        // ----------------------------------------------------------------
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 10) {
+                nav.style.borderBottomColor = 'var(--border-primary)';
+            } else {
+                nav.style.borderBottomColor = 'var(--border-subtle)';
+            }
+        });
+    </script>
+</body>
+</html>
