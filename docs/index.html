@@ -49,11 +49,7 @@
             --accent-subtle: rgba(0, 113, 227, 0.08);
             --accent-glow: rgba(0, 113, 227, 0.12);
 
-            --green: #34C759;
-            --orange: #FF9F0A;
-            --red: #FF3B30;
-            --purple: #AF52DE;
-            --teal: #5AC8FA;
+            /* Monochrome palette — only blue accent used */
 
             /* Syntax highlighting — Light */
             --syn-keyword: #AD3DA4;
@@ -293,16 +289,7 @@
         }
 
         .hero::before {
-            content: '';
-            position: absolute;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            pointer-events: none;
-            opacity: 0.5;
+            display: none;
         }
 
         .hero-badge {
@@ -324,9 +311,8 @@
         .hero-badge .dot {
             width: 6px;
             height: 6px;
-            background: var(--green);
+            background: var(--text-tertiary);
             border-radius: 50%;
-            animation: pulse 2s ease infinite;
         }
 
         .hero h1 {
@@ -341,10 +327,7 @@
         }
 
         .hero h1 .gradient-text {
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
         }
 
         .hero-subtitle {
@@ -476,7 +459,7 @@
         .section-label {
             font-size: 13px;
             font-weight: 600;
-            color: var(--accent);
+            color: var(--text-tertiary);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: var(--space-sm);
@@ -521,14 +504,18 @@
         }
 
         .feature-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-md);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: var(--space-md);
-            font-size: 18px;
+            font-size: 14px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-weight: 600;
         }
 
         .feature-card h3 {
@@ -784,13 +771,13 @@
         }
 
         .badge-advanced {
-            background: rgba(175, 82, 222, 0.12);
-            color: var(--purple);
+            background: var(--bg-tertiary);
+            color: var(--text-tertiary);
         }
 
         .badge-persistence {
-            background: rgba(52, 199, 89, 0.12);
-            color: var(--green);
+            background: var(--bg-tertiary);
+            color: var(--text-tertiary);
         }
 
         /* ================================================================
@@ -911,15 +898,20 @@
 
         @media (max-width: 768px) {
             .hero {
-                padding: 100px 0 60px;
+                padding: 90px 0 50px;
             }
 
             section {
-                padding: var(--space-3xl) 0;
+                padding: var(--space-2xl) 0;
+            }
+
+            .container, .container-wide {
+                padding: 0 var(--space-md);
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
+                gap: var(--space-sm);
             }
 
             .nav-links {
@@ -937,11 +929,89 @@
 
             .hero-actions {
                 flex-direction: column;
+                padding: 0 var(--space-md);
             }
 
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .install-code {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+
+            .install-code span {
+                white-space: normal;
+                text-align: center;
+                line-height: 1.4;
+            }
+
+            .arch-visual {
+                font-size: 10px;
+                padding: var(--space-md);
+                border-radius: var(--radius-md);
+            }
+
+            .code-body {
+                padding: var(--space-md);
+            }
+
+            .code-body pre {
+                font-size: 12px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 14px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .section-desc {
+                font-size: 15px;
+            }
+
+            .api-class-name {
+                font-size: 18px;
+            }
+
+            .api-method-sig {
+                font-size: 13px;
+                word-break: break-all;
+            }
+
+            .feature-card {
+                padding: var(--space-lg);
+            }
+
+            .hero-subtitle {
+                padding: 0 var(--space-sm);
+            }
+
+            .footer-links {
+                gap: var(--space-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+            }
+
+            .arch-visual {
+                font-size: 9px;
+                line-height: 1.5;
             }
         }
 
@@ -1001,15 +1071,15 @@
             <div class="container">
                 <div class="hero-badge">
                     <span class="dot"></span>
-                    v1.0.0 — Now on Arduino Library Manager
+                    v1.0.0 — Available on Arduino Library Manager
                 </div>
                 <h1>
-                    Power monitoring,<br>
-                    <span class="gradient-text">industrial grade.</span>
+                    Stop guessing<br>
+                    <span class="gradient-text">your sensor readings.</span>
                 </h1>
                 <p class="hero-subtitle">
-                    A production-ready Arduino library with Adaptive Kalman Filtering, 
-                    multi-point calibration, and cross-platform persistent storage.
+                    Your ACS712 reads 0.3A when nothing is connected. Your voltage flickers 
+                    between 12.4 and 12.7 on the LCD. IndustrialSense fixes all of that.
                 </p>
                 <div class="hero-actions">
                     <a href="#quickstart" class="btn btn-primary">
@@ -1035,44 +1105,128 @@
              ================================================================ -->
         <section id="features">
             <div class="container-wide">
-                <div class="section-label fade-in">Capabilities</div>
-                <h2 class="section-title fade-in">Built for the real world.</h2>
+                <div class="section-label fade-in">The problem</div>
+                <h2 class="section-title fade-in">Raw analogRead() is never enough.</h2>
                 <p class="section-desc fade-in">
-                    Every feature designed to handle high-EMI environments, FOC inverter noise, 
-                    and thermal drift — so your readings stay rock-solid.
+                    You've been there — ADC noise produces phantom readings, 
+                    the sensor drifts after 30 minutes, and recalibration means 
+                    reflashing the firmware every single time.
                 </p>
 
                 <div class="features-grid">
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">🧠</div>
+                        <div class="feature-icon">K</div>
                         <h3>Adaptive Kalman Filter</h3>
-                        <p>EKF-inspired filter with innovation gating. Skips covariance updates during stable periods to save CPU and lock zero-current readings.</p>
+                        <p>No more jittering at 0A. The filter locks onto stable readings and only reacts when a real change happens — not when the ADC spits noise from your motor driver.</p>
                     </div>
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">📐</div>
+                        <div class="feature-icon">C</div>
                         <h3>Multi-Point Calibration</h3>
-                        <p>Up to 10 non-linear calibration points with segmented linear interpolation. Auto-sorted, with edge extrapolation for out-of-range values.</p>
+                        <p>Your sensor isn't linear. We know. Add up to 10 reference points at real voltages — the library interpolates the rest. No more hardcoded magic numbers.</p>
                     </div>
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">💾</div>
+                        <div class="feature-icon">S</div>
                         <h3>Persistent Storage</h3>
-                        <p>Calibration data survives reboots. ESP32 uses Preferences (NVS), AVR uses EEPROM with wear-leveling via update(). Zero user code required.</p>
+                        <p>Calibrated on-site? It stays. EEPROM on AVR, NVS on ESP32 — all automatic. Power cycle, firmware update, doesn't matter. Your calibration survives.</p>
                     </div>
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">🎯</div>
+                        <div class="feature-icon">Z</div>
                         <h3>Auto-Zero Compensation</h3>
-                        <p>Detects stable zero-current conditions and automatically recalibrates the sensor offset to compensate for thermal drift.</p>
+                        <p>After 30 minutes your ACS712 offset drifts from heat. IndustrialSense notices when you're at 0A for 5+ seconds and silently recalibrates itself.</p>
                     </div>
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">📊</div>
+                        <div class="feature-icon">64</div>
                         <h3>64× Oversampling</h3>
-                        <p>Averages 64 ADC samples per read, gaining ~3 effective bits of resolution. Configurable from 1 to 256 samples.</p>
+                        <p>One ADC sample has ±2 LSB noise. We average 64. That's 3 extra bits of effective resolution — 13-bit accuracy from a 10-bit ADC. In under 1ms.</p>
                     </div>
                     <div class="feature-card fade-in">
-                        <div class="feature-icon">🔌</div>
+                        <div class="feature-icon">fn</div>
                         <h3>Custom ADC Injection</h3>
-                        <p>Swap in external ADC chips (ADS1115, ADS1015) via function pointers. No library modification needed.</p>
+                        <p>Outgrew the built-in ADC? Pass a function pointer to your ADS1115 or MCP3008 read function. The entire pipeline keeps working — no library fork needed.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             COMPARISON TABLE
+             ================================================================ -->
+        <section id="comparison" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="section-label fade-in">Why this library</div>
+                <h2 class="section-title fade-in">Compared to the alternatives.</h2>
+                <p class="section-desc fade-in">
+                    There are other ways to read sensors. Here's why most of them 
+                    fail when the environment gets real.
+                </p>
+
+                <div class="table-wrapper fade-in">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Raw analogRead()</th>
+                                <th>Typical Libraries</th>
+                                <th>IndustrialSense</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Noise filtering</td>
+                                <td>&#x2717;</td>
+                                <td>Simple averaging</td>
+                                <td>&#x2713; Adaptive Kalman</td>
+                            </tr>
+                            <tr>
+                                <td>Zero-current stability</td>
+                                <td>&#x2717; Reads 0.2–0.5A</td>
+                                <td>&#x2717; Manual offset</td>
+                                <td>&#x2713; Auto-zero + deadzone</td>
+                            </tr>
+                            <tr>
+                                <td>Thermal drift handling</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2713; Auto-recalibrates</td>
+                            </tr>
+                            <tr>
+                                <td>Non-linear correction</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2717; Linear only</td>
+                                <td>&#x2713; 10-point interpolation</td>
+                            </tr>
+                            <tr>
+                                <td>Calibration persistence</td>
+                                <td>&#x2717; Lost on reboot</td>
+                                <td>&#x2717; Manual EEPROM</td>
+                                <td>&#x2713; Auto-save to NVS/EEPROM</td>
+                            </tr>
+                            <tr>
+                                <td>Runtime calibration</td>
+                                <td>&#x2717; Reflash needed</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2713; Serial/MQTT commands</td>
+                            </tr>
+                            <tr>
+                                <td>Cross-platform storage</td>
+                                <td>&#x2717;</td>
+                                <td>ESP32 or AVR only</td>
+                                <td>&#x2713; Both + fallback</td>
+                            </tr>
+                            <tr>
+                                <td>External ADC support</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2717;</td>
+                                <td>&#x2713; Function pointer injection</td>
+                            </tr>
+                            <tr>
+                                <td>Beginner-friendly</td>
+                                <td>&#x2713; But inaccurate</td>
+                                <td>&#x2713; But limited</td>
+                                <td>&#x2713; 3 lines to start</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -1080,13 +1234,13 @@
         <!-- ================================================================
              QUICK START
              ================================================================ -->
-        <section id="quickstart" style="background: var(--bg-secondary);">
+        <section id="quickstart">
             <div class="container">
                 <div class="section-label fade-in">Quick Start</div>
                 <h2 class="section-title fade-in">Three lines. That's it.</h2>
                 <p class="section-desc fade-in">
-                    Progressive disclosure — simple enough for beginners, 
-                    powerful enough for industrial deployments.
+                    No config structs. No init sequences. No 200-line boilerplate. 
+                    Declare, begin, read.
                 </p>
 
                 <div class="code-block fade-in">
@@ -1120,8 +1274,7 @@
                 </div>
 
                 <div class="callout callout-info fade-in">
-                    <span class="callout-icon">💡</span>
-                    <span><strong>Under the hood,</strong> each <code>read()</code> call performs: oversample → filter → convert → deadzone/smooth. All automatically.</span>
+                    <span><strong>Under the hood,</strong> each <code>read()</code> call runs the full pipeline: oversample → filter → convert → deadzone → smooth. You get lab-grade readings from a $2 sensor.</span>
                 </div>
             </div>
         </section>
@@ -1132,10 +1285,10 @@
         <section id="sensors">
             <div class="container">
                 <div class="section-label fade-in">Supported Hardware</div>
-                <h2 class="section-title fade-in">Sensors.</h2>
+                <h2 class="section-title fade-in">No datasheet lookup needed.</h2>
                 <p class="section-desc fade-in">
-                    Built-in profiles with datasheet-accurate sensitivity values. 
-                    Just pass the enum — parameters load automatically.
+                    Pass the enum, we load the sensitivity. Every profile is 
+                    verified against the official Allegro datasheets.
                 </p>
 
                 <div class="table-wrapper fade-in">
@@ -1204,10 +1357,10 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
         <section id="commands" style="background: var(--bg-secondary);">
             <div class="container">
                 <div class="section-label fade-in">Runtime Calibration</div>
-                <h2 class="section-title fade-in">Serial commands.</h2>
+                <h2 class="section-title fade-in">Calibrate without reflashing.</h2>
                 <p class="section-desc fade-in">
-                    Calibrate on the fly via Serial, MQTT, or Bluetooth. 
-                    No reflashing required.
+                    Deployed in the field? Connect via Serial, MQTT, or Bluetooth 
+                    and calibrate on the spot. Changes persist across reboots.
                 </p>
 
                 <div class="cmd-grid fade-in">
@@ -1438,6 +1591,61 @@ Voltage Sensor Pipeline:
 Storage Pipeline:
   processCommand() → save() → ┌─ ESP32: Preferences (NVS)
                                └─ AVR:   EEPROM.update()</div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             BENEFITS & ROADMAP
+             ================================================================ -->
+        <section id="benefits">
+            <div class="container">
+                <div class="section-label fade-in">Benefits</div>
+                <h2 class="section-title fade-in">What you actually get.</h2>
+
+                <div class="features-grid" style="margin-bottom: var(--space-3xl);">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">1</div>
+                        <h3>Ship faster</h3>
+                        <p>Stop writing your own moving-average filter for the 10th time. Install the library and focus on your actual product logic.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">2</div>
+                        <h3>Deploy with confidence</h3>
+                        <p>Auto-zero and persistent calibration mean your sensor doesn't need babysitting after install. Set it up once, it runs for years.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">3</div>
+                        <h3>Grow without rewriting</h3>
+                        <p>Start with analogRead() today, swap in an ADS1115 tomorrow. Same API, same pipeline. No refactoring, no breaking changes.</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-label fade-in">Roadmap</div>
+                <h2 class="section-title fade-in">What's next.</h2>
+                <p class="section-desc fade-in">
+                    IndustrialSense is actively developed. Here's where we're headed.
+                </p>
+
+                <div class="cmd-grid fade-in">
+                    <div class="cmd-item">
+                        <span class="cmd-code">v1.1</span>
+                        <span class="cmd-desc">AC current measurement support — true RMS calculation for CT sensors and ACS712 on mains power.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">v1.2</span>
+                        <span class="cmd-desc">Power calculation module — real-time Watts, kWh accumulation, and power factor estimation.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">v1.3</span>
+                        <span class="cmd-desc">Diagnostics mode — built-in noise floor analysis, calibration health check, and serial data export for debugging.</span>
+                    </div>
+                    <div class="cmd-item">
+                        <span class="cmd-code">v2.0</span>
+                        <span class="cmd-desc">Multi-channel support — monitor multiple sensors from a single manager class with shared calibration storage.</span>
+                    </div>
+                </div>
             </div>
         </section>
 
