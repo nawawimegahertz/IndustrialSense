@@ -20,10 +20,9 @@
 
     <style>
         /* ================================================================
-           DESIGN SYSTEM — Apple × Notion Minimalist
+           DESIGN SYSTEM
            ================================================================ */
         :root {
-            /* Colors — Light Theme */
             --bg-primary: #FFFFFF;
             --bg-secondary: #F7F7F8;
             --bg-tertiary: #F0F0F2;
@@ -49,9 +48,6 @@
             --accent-subtle: rgba(0, 113, 227, 0.08);
             --accent-glow: rgba(0, 113, 227, 0.12);
 
-            /* Monochrome palette — only blue accent used */
-
-            /* Syntax highlighting — Light */
             --syn-keyword: #AD3DA4;
             --syn-string: #D12F1B;
             --syn-comment: #8E8E93;
@@ -60,7 +56,6 @@
             --syn-type: #0B4F79;
             --syn-directive: #643820;
 
-            /* Spacing */
             --space-xs: 4px;
             --space-sm: 8px;
             --space-md: 16px;
@@ -70,23 +65,19 @@
             --space-3xl: 64px;
             --space-4xl: 96px;
 
-            /* Typography */
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 
-            /* Radius */
             --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 16px;
             --radius-xl: 20px;
 
-            /* Shadows */
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
             --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
             --shadow-xl: 0 20px 60px rgba(0,0,0,0.10);
 
-            /* Nav */
             --nav-height: 52px;
         }
 
@@ -133,11 +124,7 @@
         /* ================================================================
            RESET & BASE
            ================================================================ */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         html {
             scroll-behavior: smooth;
@@ -155,995 +142,476 @@
             overflow-x: hidden;
         }
 
-        ::selection {
-            background: var(--accent);
-            color: white;
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: var(--accent-hover);
-        }
-
+        ::selection { background: var(--accent); color: white; }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--accent-hover); }
         img { max-width: 100%; }
 
         /* ================================================================
-           NAVIGATION — Frosted glass navbar (Apple style)
+           NAV
            ================================================================ */
         .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: fixed; top: 0; left: 0; right: 0;
             height: var(--nav-height);
             background: var(--bg-nav);
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             border-bottom: 0.5px solid var(--border-subtle);
             z-index: 1000;
-            transition: background 0.3s ease;
         }
 
         .nav-inner {
-            max-width: 1080px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: 1080px; margin: 0 auto; height: 100%;
+            display: flex; align-items: center; justify-content: space-between;
             padding: 0 var(--space-lg);
         }
 
         .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
+            display: flex; align-items: center; gap: var(--space-sm);
+            font-weight: 700; font-size: 15px; color: var(--text-primary);
+            text-decoration: none; letter-spacing: -0.02em;
         }
 
-        .nav-logo svg {
-            width: 20px;
-            height: 20px;
-        }
+        .nav-logo svg { width: 20px; height: 20px; }
 
         .nav-links {
-            display: flex;
-            align-items: center;
-            gap: var(--space-lg);
+            display: flex; align-items: center; gap: var(--space-lg);
         }
 
         .nav-links a {
-            font-size: 13px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            transition: color 0.2s ease;
+            font-size: 13px; font-weight: 500; color: var(--text-secondary);
+            transition: color 0.2s ease; text-decoration: none;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
+        .nav-links a:hover { color: var(--text-primary); }
 
         .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: var(--space-xs);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
+            background: none; border: none; cursor: pointer;
+            color: var(--text-secondary); padding: 6px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; transition: color 0.2s ease;
         }
 
-        .theme-toggle:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+        .theme-toggle:hover { color: var(--text-primary); }
+        .theme-toggle svg { width: 16px; height: 16px; }
+
+        /* ================================================================
+           LANGUAGE SWITCHER
+           ================================================================ */
+        .lang-switcher { position: relative; display: flex; align-items: center; }
+
+        .lang-btn {
+            background: none; border: 0.5px solid var(--border-subtle); cursor: pointer;
+            color: var(--text-secondary); padding: 4px 10px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; gap: 4px;
+            font-family: var(--font-sans); font-size: 14px; transition: all 0.2s ease;
         }
 
-        .theme-toggle svg {
-            width: 18px;
-            height: 18px;
+        .lang-btn:hover { background: var(--bg-tertiary); border-color: var(--border-primary); }
+
+        .lang-dropdown {
+            position: absolute; top: calc(100% + 6px); right: 0;
+            background: var(--bg-card); border: 0.5px solid var(--border-primary);
+            border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+            min-width: 160px; padding: 4px;
+            opacity: 0; visibility: hidden; transform: translateY(-4px);
+            transition: all 0.15s ease; z-index: 1001;
         }
+
+        .lang-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .lang-option {
+            display: flex; align-items: center; gap: var(--space-sm); width: 100%;
+            padding: 8px 12px; background: none; border: none; border-radius: var(--radius-sm);
+            font-family: var(--font-sans); font-size: 13px; color: var(--text-secondary);
+            cursor: pointer; transition: all 0.15s ease; text-align: left;
+        }
+
+        .lang-option:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .lang-option.active { color: var(--text-primary); font-weight: 500; }
+        .lang-option .check { opacity: 0; font-size: 11px; margin-left: auto; }
+        .lang-option.active .check { opacity: 1; }
 
         /* ================================================================
            LAYOUT
            ================================================================ */
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        .container-wide {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        main {
-            padding-top: var(--nav-height);
-        }
+        .container { max-width: 720px; margin: 0 auto; padding: 0 var(--space-lg); }
+        .container-wide { max-width: 960px; margin: 0 auto; padding: 0 var(--space-lg); }
+        main { padding-top: var(--nav-height); }
 
         section {
             padding: var(--space-4xl) 0;
         }
 
         /* ================================================================
-           HERO — Large centered text (Apple keynote style)
-           ================================================================ */
-        .hero {
-            background: var(--bg-hero-gradient);
-            text-align: center;
-            padding: 120px 0 80px;
-            position: relative;
-            overflow: hidden;
+           TYPOGRAPHY HIERARCHY
+           =============================================================== */
+        .section-label {
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--text-tertiary);
+            margin-bottom: var(--space-md);
         }
 
-        .hero::before {
-            display: none;
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px); font-weight: 700;
+            letter-spacing: -0.03em; line-height: 1.15;
+            margin-bottom: var(--space-md); color: var(--text-primary);
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: 6px 14px;
-            background: var(--bg-badge);
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: var(--space-lg);
-            border: 0.5px solid var(--border-subtle);
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
+        .section-title code {
+            font-family: var(--font-mono); color: var(--syn-function);
+            font-size: 0.82em; font-weight: 600; background: var(--bg-code);
+            padding: 2px 8px; border-radius: var(--radius-sm);
+            border: 0.5px solid var(--border-code);
         }
 
-        .hero-badge .dot {
-            width: 6px;
-            height: 6px;
-            background: var(--text-tertiary);
-            border-radius: 50%;
+        .section-desc {
+            font-size: 17px; color: var(--text-secondary);
+            line-height: 1.7; max-width: 600px; margin-bottom: var(--space-2xl);
         }
 
-        .hero h1 {
-            font-size: clamp(40px, 7vw, 64px);
-            font-weight: 700;
-            letter-spacing: -0.035em;
-            line-height: 1.05;
-            color: var(--text-primary);
-            margin-bottom: var(--space-lg);
-            animation: fadeInUp 0.6s ease 0.1s forwards;
-            opacity: 0;
-        }
-
-        .hero h1 .gradient-text {
-            color: var(--text-primary);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(17px, 2.5vw, 20px);
-            font-weight: 400;
-            color: var(--text-secondary);
-            max-width: 560px;
-            margin: 0 auto var(--space-xl);
-            line-height: 1.5;
-            letter-spacing: -0.01em;
-            animation: fadeInUp 0.6s ease 0.2s forwards;
-            opacity: 0;
-        }
-
-        .hero-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-md);
-            animation: fadeInUp 0.6s ease 0.3s forwards;
-            opacity: 0;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: 12px 24px;
-            border-radius: 980px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: var(--font-sans);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border: none;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #FFF;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            color: #FFF;
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(0,113,227,0.3);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 0.5px solid var(--border-primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-card-hover);
-            transform: scale(1.02);
-        }
-
-        .btn svg {
-            width: 16px;
-            height: 16px;
+        .divider {
+            height: 0.5px; background: var(--border-subtle);
+            margin: var(--space-3xl) 0;
         }
 
         /* ================================================================
-           INSTALL BANNER
+           HERO
            ================================================================ */
-        .install-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-md);
-            margin-top: var(--space-2xl);
-            animation: fadeInUp 0.6s ease 0.4s forwards;
-            opacity: 0;
+        .hero {
+            padding: calc(var(--space-4xl) + var(--space-2xl)) 0 var(--space-4xl);
+            background: var(--bg-hero-gradient);
+            text-align: center;
         }
 
-        .install-code {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            background: var(--bg-code);
-            border: 0.5px solid var(--border-code);
-            border-radius: var(--radius-md);
-            padding: 10px 16px;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: var(--space-sm);
+            padding: 6px 14px; background: var(--bg-badge);
+            border-radius: 999px; font-size: 12px; font-weight: 500;
+            color: var(--text-secondary); margin-bottom: var(--space-xl);
         }
 
-        .install-code:hover {
-            border-color: var(--accent);
-            background: var(--accent-subtle);
+        .hero-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #34C759;
         }
 
-        .install-code .copy-icon {
-            opacity: 0.4;
-            transition: opacity 0.2s;
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 64px); font-weight: 800;
+            letter-spacing: -0.04em; line-height: 1.05;
+            margin-bottom: var(--space-lg);
         }
 
-        .install-code:hover .copy-icon {
-            opacity: 1;
+        .hero-subtitle {
+            font-size: 18px; color: var(--text-secondary);
+            max-width: 540px; margin: 0 auto var(--space-xl);
+            line-height: 1.65;
         }
 
-        .install-code.copied::after {
-            content: 'Copied!';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-            font-size: 11px;
-            font-family: var(--font-sans);
-            animation: fadeInUp 0.3s ease;
+        .hero-cta {
+            display: flex; align-items: center; justify-content: center;
+            gap: var(--space-md); flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: var(--space-sm);
+            padding: 10px 20px; background: var(--accent); color: white;
+            border-radius: var(--radius-md); font-weight: 600; font-size: 14px;
+            text-decoration: none; transition: all 0.2s ease; border: none;
+        }
+
+        .btn-primary:hover { background: var(--accent-hover); color: white; transform: translateY(-1px); }
+
+        .install-cmd {
+            display: inline-flex; align-items: center; gap: var(--space-sm);
+            padding: 10px 16px; background: var(--bg-code);
+            border: 0.5px solid var(--border-code); border-radius: var(--radius-md);
+            font-family: var(--font-mono); font-size: 13px; color: var(--text-code);
+            cursor: pointer; transition: all 0.2s ease; position: relative;
+        }
+
+        .install-cmd:hover { border-color: var(--border-primary); }
+        .install-cmd.copied::after {
+            content: 'Copied!'; position: absolute; top: -28px; left: 50%;
+            transform: translateX(-50%); font-family: var(--font-sans);
+            font-size: 11px; color: var(--text-tertiary); font-weight: 500;
         }
 
         /* ================================================================
            FEATURE CARDS
            ================================================================ */
-        .section-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: var(--space-sm);
-        }
-
-        .section-title {
-            font-size: clamp(28px, 4vw, 40px);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: var(--space-md);
-        }
-
-        .section-title code {
-            font-family: var(--font-mono);
-            color: var(--syn-function);
-            font-size: 0.85em;
-            font-weight: 600;
-            background: var(--bg-code);
-            padding: 2px 8px;
-            border-radius: var(--radius-sm);
-            border: 0.5px solid var(--border-code);
-        }
-
-        .section-desc {
-            font-size: 17px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: var(--space-3xl);
-        }
-
         .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-md);
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md); margin-top: var(--space-xl);
         }
 
         .feature-card {
-            background: var(--bg-card);
-            border: 0.5px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: var(--space-lg); background: var(--bg-card);
+            border: 0.5px solid var(--border-subtle); border-radius: var(--radius-lg);
+            transition: all 0.25s ease;
         }
 
         .feature-card:hover {
-            border-color: var(--border-primary);
-            box-shadow: var(--shadow-md);
+            border-color: var(--border-primary); box-shadow: var(--shadow-md);
             transform: translateY(-2px);
         }
 
         .feature-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--space-md);
-            font-size: 14px;
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            font-weight: 600;
+            width: 36px; height: 36px; border-radius: var(--radius-sm);
+            background: var(--bg-tertiary); display: flex; align-items: center;
+            justify-content: center; font-family: var(--font-mono); font-size: 13px;
+            font-weight: 600; color: var(--text-secondary); margin-bottom: var(--space-md);
         }
 
         .feature-card h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px; font-weight: 600; margin-bottom: var(--space-sm);
             letter-spacing: -0.01em;
-            margin-bottom: var(--space-sm);
         }
 
         .feature-card p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.55;
+            font-size: 13px; color: var(--text-secondary); line-height: 1.6;
         }
 
         /* ================================================================
-           SENSORS TABLE
+           TABLES
            ================================================================ */
-        .table-wrapper {
-            overflow-x: auto;
-            border: 0.5px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            background: var(--bg-card);
-        }
+        .table-wrapper { overflow-x: auto; margin-top: var(--space-xl); }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
+            width: 100%; border-collapse: collapse; font-size: 13px;
         }
 
-        th {
-            text-align: left;
-            padding: 14px 20px;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-tertiary);
-            background: var(--bg-secondary);
-            border-bottom: 0.5px solid var(--border-subtle);
+        thead th {
+            text-align: left; padding: 12px 16px; font-weight: 600; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-tertiary); border-bottom: 1px solid var(--border-primary);
+            white-space: nowrap;
         }
 
-        td {
-            padding: 14px 20px;
-            border-bottom: 0.5px solid var(--border-subtle);
-            color: var(--text-primary);
+        thead th code {
+            font-family: var(--font-mono); font-size: 11px; color: var(--syn-function);
+            background: var(--bg-code); padding: 1px 5px; border-radius: 3px;
+            border: 0.5px solid var(--border-code); text-transform: none;
+            letter-spacing: normal;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        tbody td {
+            padding: 10px 16px; border-bottom: 0.5px solid var(--border-subtle);
+            color: var(--text-primary); vertical-align: top;
         }
 
-        td code {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            background: var(--bg-code);
-            padding: 2px 8px;
-            border-radius: var(--radius-sm);
-            color: var(--accent);
-            border: 0.5px solid var(--border-code);
+        tbody td code {
+            font-family: var(--font-mono); font-size: 12px; background: var(--bg-code);
+            padding: 1px 5px; border-radius: 3px;
         }
+
+        tbody tr:hover { background: var(--bg-secondary); }
 
         /* ================================================================
-           CODE BLOCKS — IDE-style
+           CODE BLOCKS
            ================================================================ */
         .code-block {
-            background: var(--bg-code);
-            border: 0.5px solid var(--border-code);
-            border-radius: var(--radius-lg);
+            border: 0.5px solid var(--border-code); border-radius: var(--radius-lg);
             overflow: hidden;
-            margin: var(--space-lg) 0;
         }
 
         .code-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 16px;
-            background: var(--bg-code-header);
-            border-bottom: 0.5px solid var(--border-code);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px; background: var(--bg-code-header);
+            font-size: 12px; color: var(--text-tertiary); font-weight: 500;
         }
 
-        .code-header-title {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-tertiary);
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
+        .code-header-title { display: flex; align-items: center; gap: var(--space-sm); }
 
-        .code-header-dots {
-            display: flex;
-            gap: 6px;
-        }
-
+        .code-header-dots { display: flex; gap: 6px; }
         .code-header-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--border-primary);
         }
-
-        .code-header-dots span:nth-child(1) { background: #FF5F57; }
-        .code-header-dots span:nth-child(2) { background: #FEBC2E; }
-        .code-header-dots span:nth-child(3) { background: #28C840; }
 
         .code-copy-btn {
-            background: none;
-            border: none;
-            color: var(--text-tertiary);
-            cursor: pointer;
-            padding: 4px;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
+            background: none; border: none; cursor: pointer;
+            color: var(--text-tertiary); padding: 4px;
+            border-radius: var(--radius-sm); transition: color 0.2s ease;
         }
 
-        .code-copy-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
+        .code-copy-btn:hover { color: var(--text-primary); }
 
         .code-body {
-            padding: 20px;
-            overflow-x: auto;
+            padding: var(--space-lg); background: var(--bg-code); overflow-x: auto;
         }
 
         .code-body pre {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            line-height: 1.65;
-            color: var(--text-code);
-            white-space: pre;
-            margin: 0;
+            font-family: var(--font-mono); font-size: 13px; line-height: 1.65;
+            color: var(--text-code); white-space: pre; tab-size: 4;
         }
 
-        /* Syntax Highlighting */
-        .kw { color: var(--syn-keyword); font-weight: 500; }
+        /* Syntax classes */
+        .kw { color: var(--syn-keyword); }
         .str { color: var(--syn-string); }
-        .cmt { color: var(--syn-comment); font-style: italic; }
+        .cmt { color: var(--syn-comment); }
         .fn { color: var(--syn-function); }
         .num { color: var(--syn-number); }
         .tp { color: var(--syn-type); }
         .dir { color: var(--syn-directive); }
 
         /* ================================================================
-           COMMAND REFERENCE
+           CALLOUT
            ================================================================ */
-        .cmd-grid {
-            display: grid;
-            gap: var(--space-sm);
+        .callout {
+            padding: var(--space-lg); background: var(--accent-subtle);
+            border-radius: var(--radius-md); font-size: 14px;
+            line-height: 1.6; color: var(--text-primary);
+            margin-top: var(--space-xl);
         }
 
-        .cmd-item {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--space-md);
-            padding: var(--space-md) var(--space-lg);
-            background: var(--bg-card);
-            border: 0.5px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            transition: all 0.2s ease;
-        }
-
-        .cmd-item:hover {
-            border-color: var(--border-primary);
-            background: var(--bg-card-hover);
-        }
-
-        .cmd-code {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--accent);
-            background: var(--accent-subtle);
-            padding: 4px 12px;
-            border-radius: var(--radius-sm);
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .cmd-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            padding-top: 3px;
+        .callout code {
+            font-family: var(--font-mono); background: var(--accent-glow);
+            padding: 1px 5px; border-radius: 3px; font-size: 13px;
         }
 
         /* ================================================================
-           API REFERENCE
+           COMMAND GRID
+           ================================================================ */
+        .cmd-grid { margin-top: var(--space-xl); }
+
+        .cmd-item {
+            display: flex; align-items: baseline; gap: var(--space-lg);
+            padding: var(--space-md) 0;
+            border-bottom: 0.5px solid var(--border-subtle);
+        }
+
+        .cmd-item:last-child { border-bottom: none; }
+
+        .cmd-code {
+            font-family: var(--font-mono); font-size: 14px; font-weight: 500;
+            color: var(--syn-function); white-space: nowrap; min-width: 60px;
+        }
+
+        .cmd-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+        /* ================================================================
+           API
            ================================================================ */
         .api-section {
             margin-bottom: var(--space-3xl);
         }
 
         .api-class-name {
-            font-family: var(--font-mono);
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: var(--space-md);
-            padding-bottom: var(--space-md);
-            border-bottom: 0.5px solid var(--border-subtle);
+            font-family: var(--font-mono); font-size: 18px; font-weight: 600;
+            color: var(--text-primary); margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm); border-bottom: 2px solid var(--accent);
+            display: inline-block;
         }
 
         .api-method {
-            padding: var(--space-lg) 0;
+            padding: var(--space-md) 0;
             border-bottom: 0.5px solid var(--border-subtle);
         }
 
-        .api-method:last-child {
-            border-bottom: none;
-        }
+        .api-method:last-child { border-bottom: none; }
 
         .api-method-sig {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: var(--space-sm);
+            font-family: var(--font-mono); font-size: 14px;
+            margin-bottom: var(--space-xs); display: flex;
+            align-items: center; gap: var(--space-sm); flex-wrap: wrap;
         }
 
-        .api-method-sig .return-type {
-            color: var(--syn-type);
-        }
-
-        .api-method-sig .method-name {
-            color: var(--syn-function);
-        }
-
-        .api-method-sig .params {
-            color: var(--text-secondary);
-        }
+        .return-type { color: var(--syn-type); }
+        .method-name { color: var(--syn-function); font-weight: 500; }
+        .params { color: var(--text-tertiary); }
 
         .api-method-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.55;
+            font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+            padding-left: 2px;
+        }
+
+        .api-method-desc code {
+            font-family: var(--font-mono); background: var(--bg-code);
+            padding: 1px 5px; border-radius: 3px; font-size: 12px;
         }
 
         .api-badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-left: 8px;
-            vertical-align: middle;
+            font-family: var(--font-sans); font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 2px 8px; border-radius: 999px;
         }
 
-        .badge-advanced {
-            background: var(--bg-tertiary);
-            color: var(--text-tertiary);
-        }
-
-        .badge-persistence {
-            background: var(--bg-tertiary);
-            color: var(--text-tertiary);
-        }
+        .badge-advanced { background: var(--bg-tertiary); color: var(--text-tertiary); }
+        .badge-persistence { background: var(--accent-subtle); color: var(--accent); }
 
         /* ================================================================
-           ARCHITECTURE DIAGRAM
+           ARCHITECTURE
            ================================================================ */
         .arch-visual {
-            background: var(--bg-code);
-            border: 0.5px solid var(--border-code);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            font-family: var(--font-mono);
-            font-size: 12px;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            overflow-x: auto;
-            white-space: pre;
+            font-family: var(--font-mono); font-size: 13px;
+            line-height: 1.6; color: var(--text-secondary);
+            background: var(--bg-code); padding: var(--space-lg);
+            border-radius: var(--radius-md); overflow-x: auto;
+            white-space: pre; border: 0.5px solid var(--border-code);
         }
 
         /* ================================================================
            FOOTER
            ================================================================ */
         .footer {
-            text-align: center;
-            padding: var(--space-3xl) 0;
+            padding: var(--space-2xl) 0;
             border-top: 0.5px solid var(--border-subtle);
-        }
-
-        .footer p {
-            font-size: 13px;
-            color: var(--text-tertiary);
-        }
-
-        .footer a {
-            color: var(--text-secondary);
+            text-align: center; font-size: 13px; color: var(--text-tertiary);
         }
 
         .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-lg);
+            display: flex; justify-content: center; gap: var(--space-lg);
             margin-bottom: var(--space-md);
         }
 
-        /* ================================================================
-           DIVIDER
-           ================================================================ */
-        .divider {
-            width: 40px;
-            height: 3px;
-            background: var(--border-primary);
-            border-radius: 2px;
-            margin: var(--space-3xl) 0;
+        .footer-links a {
+            color: var(--text-secondary); font-size: 13px; font-weight: 500;
         }
 
-        /* ================================================================
-           CALLOUT BLOCKS
-           ================================================================ */
-        .callout {
-            display: flex;
-            gap: var(--space-md);
-            padding: var(--space-lg);
-            border-radius: var(--radius-md);
-            margin: var(--space-lg) 0;
-            font-size: 14px;
-            line-height: 1.55;
-        }
-
-        .callout-info {
-            background: var(--accent-subtle);
-            border: 0.5px solid rgba(0,113,227,0.15);
-            color: var(--text-primary);
-        }
-
-        .callout-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: -1px;
-        }
-
-        /* ================================================================
-           SCROLL ANIMATIONS
-           ================================================================ */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .footer a { color: var(--text-secondary); }
+        .footer a:hover { color: var(--text-primary); }
 
         /* ================================================================
            ANIMATIONS
            ================================================================ */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .fade-in {
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* ================================================================
-           MOBILE RESPONSIVE
-           ================================================================ */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: var(--space-xs);
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 90px 0 50px;
-            }
-
-            section {
-                padding: var(--space-2xl) 0;
-            }
-
-            .container, .container-wide {
-                padding: 0 var(--space-md);
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-sm);
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .cmd-item {
-                flex-direction: column;
-                gap: var(--space-sm);
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                padding: 0 var(--space-md);
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .install-code {
-                font-size: 11px;
-                padding: 8px 12px;
-            }
-
-            .install-code span {
-                white-space: normal;
-                text-align: center;
-                line-height: 1.4;
-            }
-
-            .arch-visual {
-                font-size: 10px;
-                padding: var(--space-md);
-                border-radius: var(--radius-md);
-            }
-
-            .code-body {
-                padding: var(--space-md);
-            }
-
-            .code-body pre {
-                font-size: 12px;
-            }
-
-            table {
-                font-size: 13px;
-            }
-
-            th, td {
-                padding: 10px 14px;
-            }
-
-            .section-title {
-                font-size: 26px;
-            }
-
-            .section-desc {
-                font-size: 15px;
-            }
-
-            .api-class-name {
-                font-size: 18px;
-            }
-
-            .api-method-sig {
-                font-size: 13px;
-                word-break: break-all;
-            }
-
-            .feature-card {
-                padding: var(--space-lg);
-            }
-
-            .hero-subtitle {
-                padding: 0 var(--space-sm);
-            }
-
-            .footer-links {
-                gap: var(--space-md);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .hero-subtitle {
-                font-size: 15px;
-            }
-
-            .arch-visual {
-                font-size: 9px;
-                line-height: 1.5;
-            }
-        }
-
-        /* ================================================================
-           LANGUAGE SWITCHER
-           ================================================================ */
-        .lang-switcher {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background: none;
-            border: 0.5px solid var(--border-subtle);
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-family: var(--font-sans);
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .lang-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border-color: var(--border-primary);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: calc(100% + 6px);
-            right: 0;
-            background: var(--bg-card);
-            border: 0.5px solid var(--border-primary);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            min-width: 140px;
-            padding: 4px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-4px);
-            transition: all 0.15s ease;
-            z-index: 1001;
-        }
-
-        .lang-dropdown.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .lang-option {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            width: 100%;
-            padding: 8px 12px;
-            background: none;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: var(--font-sans);
-            font-size: 13px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.15s ease;
-            text-align: left;
-        }
-
-        .lang-option:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .lang-option.active {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .lang-option .check {
-            opacity: 0;
-            font-size: 11px;
-            margin-left: auto;
-        }
-
-        .lang-option.active .check {
-            opacity: 1;
-        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         /* ================================================================
            SCROLLBAR
            ================================================================ */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-primary); border-radius: 3px; }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 768px) {
+            .nav-links a:not([href*="github"]) { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: clamp(28px, 8vw, 44px); }
+            section { padding: var(--space-3xl) 0; }
+            .hero { padding: calc(var(--space-3xl) + var(--space-xl)) 0 var(--space-3xl); }
+            .cmd-item { flex-direction: column; gap: var(--space-sm); }
+            .api-method-sig { font-size: 12px; }
         }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-primary);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-tertiary);
+        @media (max-width: 480px) {
+            .hero-cta { flex-direction: column; }
+            .install-cmd { width: 100%; justify-content: center; }
+            .table-wrapper { margin-left: calc(-1 * var(--space-lg)); margin-right: calc(-1 * var(--space-lg)); }
+            table { font-size: 12px; }
+            thead th, tbody td { padding: 8px 12px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ================================================================
-         NAVIGATION
-         ================================================================ -->
+    <!-- NAV -->
     <nav class="nav">
         <div class="nav-inner">
             <a href="#" class="nav-logo">
@@ -1151,11 +619,9 @@
                 IndustrialSense
             </a>
             <div class="nav-links">
-                <a href="#features" data-i18n="nav_features">Features</a>
                 <a href="#quickstart" data-i18n="nav_quickstart">Quick Start</a>
-                <a href="#sensors" data-i18n="nav_sensors">Sensors</a>
+                <a href="#features" data-i18n="nav_features">Features</a>
                 <a href="#api" data-i18n="nav_api">API</a>
-                <a href="#commands" data-i18n="nav_commands">Commands</a>
                 <a href="https://github.com/nawawimegahertz/IndustrialSense" target="_blank">GitHub</a>
                 <div class="lang-switcher">
                     <button class="lang-btn" onclick="toggleLangMenu()" aria-label="Change language">
@@ -1182,183 +648,40 @@
     </nav>
 
     <main>
-        <!-- ================================================================
-             HERO
-             ================================================================ -->
+        <!-- ============================================================
+             1. HERO — Hook with the pain point
+             ============================================================ -->
         <section class="hero">
             <div class="container">
                 <div class="hero-badge">
                     <span class="dot"></span>
-                    <span data-i18n="hero_badge">v1.0.0 — Available on Arduino Library Manager</span>
+                    <span data-i18n="hero_badge">v1.0 · Arduino Library Manager</span>
                 </div>
                 <h1>
-                    <span data-i18n="hero_title_1">Stop guessing</span><br>
-                    <span class="gradient-text" data-i18n="hero_title_2">your sensor readings.</span>
+                    <span data-i18n="hero_title_1">Your sensor is</span><br>
+                    <span data-i18n="hero_title_2">lying to you.</span>
                 </h1>
                 <p class="hero-subtitle" data-i18n="hero_subtitle">
-                    Your ACS712 reads 0.3A when nothing is connected. Your voltage flickers 
-                    between 12.4 and 12.7 on the LCD. IndustrialSense fixes all of that.
+                    ACS712 reads 0.3A with no load. Voltage jumps between 12.4 and 12.7 on the LCD. It's not the sensor. It's your code. IndustrialSense fixes that.
                 </p>
-                <div class="hero-actions">
-                    <a href="#quickstart" class="btn btn-primary">
-                        Get Started
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                    <a href="https://github.com/nawawimegahertz/IndustrialSense" class="btn btn-secondary" target="_blank">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        View on GitHub
-                    </a>
-                </div>
-                <div class="install-bar">
-                    <div class="install-code" onclick="copyInstall(this)" title="Click to copy">
-                        <span>Arduino IDE → Library Manager → Search "IndustrialSense"</span>
-                        <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <div class="hero-cta">
+                    <a href="#quickstart" class="btn-primary" data-i18n="hero_cta">Get Started</a>
+                    <div class="install-cmd" onclick="copyInstall(this)">
+                        <span>Library Manager → IndustrialSense</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================================================================
-             FEATURES
-             ================================================================ -->
-        <section id="features">
-            <div class="container-wide">
-                <div class="section-label fade-in" data-i18n="feat_label">The problem</div>
-                <h2 class="section-title fade-in" data-i18n="feat_title">Raw <code>analogRead()</code> is never enough.</h2>
-                <p class="section-desc fade-in" data-i18n="feat_desc">
-                    You've been there — ADC noise produces phantom readings, 
-                    the sensor drifts after 30 minutes, and recalibration means 
-                    reflashing the firmware every single time.
-                </p>
-
-                <div class="features-grid">
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">K</div>
-                        <h3 data-i18n="feat_kalman_title">Adaptive Kalman Filter</h3>
-                        <p data-i18n="feat_kalman_desc">No more jittering at 0A. The filter locks onto stable readings and only reacts when a real change happens — not when the ADC spits noise from your motor driver.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">C</div>
-                        <h3 data-i18n="feat_cal_title">Multi-Point Calibration</h3>
-                        <p data-i18n="feat_cal_desc">Your sensor isn't linear. We know. Add up to 10 reference points at real voltages — the library interpolates the rest. No more hardcoded magic numbers.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">S</div>
-                        <h3 data-i18n="feat_storage_title">Persistent Storage</h3>
-                        <p data-i18n="feat_storage_desc">Calibrated on-site? It stays. EEPROM on AVR, NVS on ESP32 — all automatic. Power cycle, firmware update, doesn't matter. Your calibration survives.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">Z</div>
-                        <h3 data-i18n="feat_zero_title">Auto-Zero Compensation</h3>
-                        <p data-i18n="feat_zero_desc">After 30 minutes your ACS712 offset drifts from heat. IndustrialSense notices when you're at 0A for 5+ seconds and silently recalibrates itself.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">64</div>
-                        <h3 data-i18n="feat_oversample_title">64× Oversampling</h3>
-                        <p data-i18n="feat_oversample_desc">One ADC sample has ±2 LSB noise. We average 64. That's 3 extra bits of effective resolution — 13-bit accuracy from a 10-bit ADC. In under 1ms.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">fn</div>
-                        <h3 data-i18n="feat_adc_title">Custom ADC Injection</h3>
-                        <p data-i18n="feat_adc_desc">Outgrew the built-in ADC? Pass a function pointer to your ADS1115 or MCP3008 read function. The entire pipeline keeps working — no library fork needed.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================================================
-             COMPARISON TABLE
-             ================================================================ -->
-        <section id="comparison" style="background: var(--bg-secondary);">
-            <div class="container">
-                <div class="section-label fade-in" data-i18n="cmp_label">Why this library</div>
-                <h2 class="section-title fade-in" data-i18n="cmp_title">Compared to the alternatives.</h2>
-                <p class="section-desc fade-in" data-i18n="cmp_desc">
-                    There are other ways to read sensors. Here's why most of them 
-                    fail when the environment gets real.
-                </p>
-
-                <div class="table-wrapper fade-in">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th data-i18n="cmp_th_feature">Feature</th>
-                                <th data-i18n="cmp_th_raw">Raw <code>analogRead()</code></th>
-                                <th data-i18n="cmp_th_typical">Typical Libraries</th>
-                                <th>IndustrialSense</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-i18n="cmp_r1_feature">Noise filtering</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r1_typical">Simple averaging</td>
-                                <td data-i18n="cmp_r1_is">&#x2713; Adaptive Kalman</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r2_feature">Zero-current stability</td>
-                                <td data-i18n="cmp_r2_raw">&#x2717; Reads 0.2–0.5A</td>
-                                <td data-i18n="cmp_r2_typical">&#x2717; Manual offset</td>
-                                <td data-i18n="cmp_r2_is">&#x2713; Auto-zero + deadzone</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r3_feature">Thermal drift handling</td>
-                                <td>&#x2717;</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r3_is">&#x2713; Auto-recalibrates</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r4_feature">Non-linear correction</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r4_typical">&#x2717; Linear only</td>
-                                <td data-i18n="cmp_r4_is">&#x2713; 10-point interpolation</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r5_feature">Calibration persistence</td>
-                                <td data-i18n="cmp_r5_raw">&#x2717; Lost on reboot</td>
-                                <td data-i18n="cmp_r5_typical">&#x2717; Manual EEPROM</td>
-                                <td data-i18n="cmp_r5_is">&#x2713; Auto-save NVS/EEPROM</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r6_feature">Runtime calibration</td>
-                                <td data-i18n="cmp_r6_raw">&#x2717; Reflash needed</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r6_is">&#x2713; Serial/MQTT commands</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r7_feature">Cross-platform storage</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r7_typical">ESP32 or AVR only</td>
-                                <td data-i18n="cmp_r7_is">&#x2713; Both + fallback</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r8_feature">External ADC support</td>
-                                <td>&#x2717;</td>
-                                <td>&#x2717;</td>
-                                <td data-i18n="cmp_r8_is">&#x2713; <i>Function pointer</i> injection</td>
-                            </tr>
-                            <tr>
-                                <td data-i18n="cmp_r9_feature">Beginner-friendly</td>
-                                <td data-i18n="cmp_r9_raw">&#x2713; But inaccurate</td>
-                                <td data-i18n="cmp_r9_typical">&#x2713; But limited</td>
-                                <td data-i18n="cmp_r9_is">&#x2713; 3 lines to start</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================================================
-             QUICK START
-             ================================================================ -->
+        <!-- ============================================================
+             2. QUICK START — Prove simplicity first
+             ============================================================ -->
         <section id="quickstart">
             <div class="container">
                 <div class="section-label fade-in" data-i18n="qs_label">Quick Start</div>
-                <h2 class="section-title fade-in" data-i18n="qs_title">Three lines. That's it.</h2>
+                <h2 class="section-title fade-in" data-i18n="qs_title">Three lines. Done.</h2>
                 <p class="section-desc fade-in" data-i18n="qs_desc">
-                    No config structs. No init sequences. No 200-line boilerplate. 
-                    Declare, begin, read.
+                    No config structs. No init sequences. Declare, begin, read.
                 </p>
 
                 <div class="code-block fade-in">
@@ -1374,7 +697,6 @@
                     <div class="code-body">
 <pre><span class="dir">#include</span> <span class="str">&lt;IndustrialSense.h&gt;</span>
 
-<span class="cmt">// Declare sensors — library auto-loads all defaults</span>
 <span class="tp">IndustrialCurrent</span> <span class="fn">currentSensor</span>(<span class="tp">ACS712_20A</span>, A0);
 <span class="tp">IndustrialVoltage</span> <span class="fn">voltageSensor</span>(A1, <span class="num">30000.0</span>, <span class="num">7500.0</span>);
 
@@ -1384,29 +706,153 @@
 }
 
 <span class="kw">void</span> <span class="fn">loop</span>() {
-    <span class="tp">float</span> amps  = currentSensor.<span class="fn">read</span>();  <span class="cmt">// Filtered current</span>
-    <span class="tp">float</span> volts = voltageSensor.<span class="fn">read</span>();  <span class="cmt">// Smoothed voltage</span>
+    <span class="tp">float</span> amps  = currentSensor.<span class="fn">read</span>();
+    <span class="tp">float</span> volts = voltageSensor.<span class="fn">read</span>();
     <span class="fn">delay</span>(<span class="num">500</span>);
 }</pre>
                     </div>
                 </div>
 
-                <div class="callout callout-info fade-in">
-                    <span data-i18n="qs_callout"><strong>Under the hood,</strong> each <code>read()</code> call runs the full pipeline: oversample → filter → convert → deadzone → smooth. You get lab-grade readings from a $2 sensor.</span>
+                <div class="callout fade-in" data-i18n="qs_callout">
+                    Every <code>read()</code> runs the full pipeline: oversample → filter → convert → deadzone → smooth. Lab-grade output from a $2 sensor.
                 </div>
             </div>
         </section>
 
-        <!-- ================================================================
-             SENSORS
-             ================================================================ -->
-        <section id="sensors">
+        <!-- ============================================================
+             3. FEATURES — What's under the hood
+             ============================================================ -->
+        <section id="features" style="background: var(--bg-secondary);">
+            <div class="container-wide">
+                <div class="section-label fade-in" data-i18n="feat_label">The problem</div>
+                <h2 class="section-title fade-in" data-i18n="feat_title">Raw <code>analogRead()</code> is not enough.</h2>
+                <p class="section-desc fade-in" data-i18n="feat_desc">
+                    ADC noise. Thermal drift. Non-linear sensors. You know the drill. Here's what this library does about it.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">K</div>
+                        <h3 data-i18n="feat_kalman_title">Adaptive Kalman Filter</h3>
+                        <p data-i18n="feat_kalman_desc">Locks onto stable readings. Only reacts to real current changes, not ADC noise from your motor driver.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">C</div>
+                        <h3 data-i18n="feat_cal_title">Multi-Point Calibration</h3>
+                        <p data-i18n="feat_cal_desc">10 reference points, auto-interpolation. Your sensor isn't linear and we don't pretend it is.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">S</div>
+                        <h3 data-i18n="feat_storage_title">Persistent Storage</h3>
+                        <p data-i18n="feat_storage_desc">EEPROM on AVR, NVS on ESP32. Calibration survives power cycles and firmware updates.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">Z</div>
+                        <h3 data-i18n="feat_zero_title">Auto-Zero</h3>
+                        <p data-i18n="feat_zero_desc">Detects 0A for 5+ seconds, then silently recalibrates the offset. Handles thermal drift automatically.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">64</div>
+                        <h3 data-i18n="feat_over_title">64× Oversampling</h3>
+                        <p data-i18n="feat_over_desc">64 samples averaged per read. 3 extra bits of resolution. 13-bit accuracy from a 10-bit ADC, under 1ms.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">fn</div>
+                        <h3 data-i18n="feat_adc_title">Custom ADC</h3>
+                        <p data-i18n="feat_adc_desc">Pass a function pointer to your ADS1115 or MCP3008. The pipeline keeps working. No fork needed.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             4. COMPARISON TABLE
+             ============================================================ -->
+        <section id="comparison">
+            <div class="container">
+                <div class="section-label fade-in" data-i18n="cmp_label">Why this library</div>
+                <h2 class="section-title fade-in" data-i18n="cmp_title">See the difference.</h2>
+
+                <div class="table-wrapper fade-in">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="cmp_th_feat">Feature</th>
+                                <th data-i18n="cmp_th_raw">Raw <code>analogRead()</code></th>
+                                <th data-i18n="cmp_th_lib">Other Libraries</th>
+                                <th>IndustrialSense</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="cmp_r1c1">Noise filtering</td>
+                                <td>✗</td>
+                                <td data-i18n="cmp_r1c3">Simple averaging</td>
+                                <td>✓ Adaptive Kalman</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r2c1">Zero-current stability</td>
+                                <td data-i18n="cmp_r2c2">✗ Reads 0.2–0.5A</td>
+                                <td data-i18n="cmp_r2c3">✗ Manual offset</td>
+                                <td>✓ Auto-zero + deadzone</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r3c1">Thermal drift</td>
+                                <td>✗</td>
+                                <td>✗</td>
+                                <td data-i18n="cmp_r3c4">✓ Auto-recalibrates</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r4c1">Non-linear correction</td>
+                                <td>✗</td>
+                                <td data-i18n="cmp_r4c3">✗ Linear only</td>
+                                <td data-i18n="cmp_r4c4">✓ 10-point interpolation</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r5c1">Calibration saved</td>
+                                <td data-i18n="cmp_r5c2">✗ Lost on reboot</td>
+                                <td data-i18n="cmp_r5c3">✗ Manual EEPROM</td>
+                                <td>✓ Auto NVS/EEPROM</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r6c1">Runtime calibration</td>
+                                <td data-i18n="cmp_r6c2">✗ Reflash needed</td>
+                                <td>✗</td>
+                                <td>✓ Serial/MQTT</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r7c1">Cross-platform</td>
+                                <td>✗</td>
+                                <td data-i18n="cmp_r7c3">ESP32 or AVR only</td>
+                                <td data-i18n="cmp_r7c4">✓ Both + fallback</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r8c1">External ADC</td>
+                                <td>✗</td>
+                                <td>✗</td>
+                                <td data-i18n="cmp_r8c4">✓ Function pointer</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="cmp_r9c1">Beginner-friendly</td>
+                                <td data-i18n="cmp_r9c2">✓ But inaccurate</td>
+                                <td data-i18n="cmp_r9c3">✓ But limited</td>
+                                <td data-i18n="cmp_r9c4">✓ 3 lines to start</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             5. SUPPORTED HARDWARE
+             ============================================================ -->
+        <section id="sensors" style="background: var(--bg-secondary);">
             <div class="container">
                 <div class="section-label fade-in" data-i18n="hw_label">Supported Hardware</div>
-                <h2 class="section-title fade-in" data-i18n="hw_title">No datasheet lookup needed.</h2>
+                <h2 class="section-title fade-in" data-i18n="hw_title">No datasheet needed.</h2>
                 <p class="section-desc fade-in" data-i18n="hw_desc">
-                    Pass the enum, we load the sensitivity. Every profile is 
-                    verified against the official Allegro datasheets.
+                    Pass the enum. Sensitivity is loaded automatically.
                 </p>
 
                 <div class="table-wrapper fade-in">
@@ -1415,49 +861,24 @@
                             <tr>
                                 <th>Enum</th>
                                 <th>Sensor</th>
-                                <th>Sensitivity</th>
-                                <th>Range</th>
+                                <th data-i18n="hw_th_sens">Sensitivity</th>
+                                <th data-i18n="hw_th_range">Range</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><code>ACS712_05A</code></td>
-                                <td>ACS712 5A</td>
-                                <td>185 mV/A</td>
-                                <td>±5A</td>
-                            </tr>
-                            <tr>
-                                <td><code>ACS712_20A</code></td>
-                                <td>ACS712 20A</td>
-                                <td>100 mV/A</td>
-                                <td>±20A</td>
-                            </tr>
-                            <tr>
-                                <td><code>ACS712_30A</code></td>
-                                <td>ACS712 30A</td>
-                                <td>66 mV/A</td>
-                                <td>±30A</td>
-                            </tr>
-                            <tr>
-                                <td><code>ACS758_50B</code></td>
-                                <td>ACS758 50B (Bidirectional)</td>
-                                <td>40 mV/A</td>
-                                <td>±50A</td>
-                            </tr>
-                            <tr>
-                                <td><code>ACS758_100U</code></td>
-                                <td>ACS758 100U (Unidirectional)</td>
-                                <td>20 mV/A</td>
-                                <td>0–100A</td>
-                            </tr>
+                            <tr><td><code>ACS712_05A</code></td><td>ACS712 5A</td><td>185 mV/A</td><td>±5A</td></tr>
+                            <tr><td><code>ACS712_20A</code></td><td>ACS712 20A</td><td>100 mV/A</td><td>±20A</td></tr>
+                            <tr><td><code>ACS712_30A</code></td><td>ACS712 30A</td><td>66 mV/A</td><td>±30A</td></tr>
+                            <tr><td><code>ACS758_50B</code></td><td>ACS758 50B (Bidirectional)</td><td>40 mV/A</td><td>±50A</td></tr>
+                            <tr><td><code>ACS758_100U</code></td><td>ACS758 100U (Unidirectional)</td><td>20 mV/A</td><td>0–100A</td></tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="divider"></div>
 
-                <div class="section-label fade-in">Wiring</div>
-                <h2 class="section-title fade-in">Voltage Divider.</h2>
+                <div class="section-label fade-in" data-i18n="hw_wire_label">Wiring</div>
+                <h2 class="section-title fade-in" data-i18n="hw_wire_title">Voltage Divider.</h2>
 
                 <div class="arch-visual fade-in">Vin ───[ R1 = 30kΩ ]───┬───[ R2 = 7.5kΩ ]───GND
                         │
@@ -1469,34 +890,33 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
             </div>
         </section>
 
-        <!-- ================================================================
-             COMMANDS
-             ================================================================ -->
-        <section id="commands" style="background: var(--bg-secondary);">
+        <!-- ============================================================
+             6. RUNTIME CALIBRATION COMMANDS
+             ============================================================ -->
+        <section id="commands">
             <div class="container">
                 <div class="section-label fade-in" data-i18n="cmd_label">Runtime Calibration</div>
                 <h2 class="section-title fade-in" data-i18n="cmd_title">Calibrate without reflashing.</h2>
                 <p class="section-desc fade-in" data-i18n="cmd_desc">
-                    Deployed in the field? Connect via Serial, MQTT, or Bluetooth 
-                    and calibrate on the spot. Changes persist across reboots.
+                    Already deployed? Send commands over Serial, MQTT, or Bluetooth. Changes persist across reboots.
                 </p>
 
                 <div class="cmd-grid fade-in">
                     <div class="cmd-item">
                         <span class="cmd-code">v12.5</span>
-                        <span class="cmd-desc" data-i18n="cmd_v125">Read current ADC value and map it to 12.5V. Saves to persistent storage automatically. Supports up to 10 calibration points.</span>
+                        <span class="cmd-desc" data-i18n="cmd_v125">Map current ADC reading to 12.5V. Auto-saved. Up to 10 points.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">v0</span>
-                        <span class="cmd-desc" data-i18n="cmd_v0">Calibrate the zero-voltage reference point. Connect the input to GND, then send this command.</span>
+                        <span class="cmd-desc" data-i18n="cmd_v0">Set zero-voltage reference. Connect input to GND first.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">auto</span>
-                        <span class="cmd-desc" data-i18n="cmd_auto">Force the current sensor to read the zero-offset immediately. Compensates for thermal drift. Saves to EEPROM/NVS.</span>
+                        <span class="cmd-desc" data-i18n="cmd_auto">Force zero-offset recalibration now. Fixes thermal drift. Saved to EEPROM/NVS.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">reset</span>
-                        <span class="cmd-desc" data-i18n="cmd_reset">Clear all calibration data from both RAM and persistent storage. Sensor returns to factory defaults.</span>
+                        <span class="cmd-desc" data-i18n="cmd_reset">Wipe all calibration data. Back to factory defaults.</span>
                     </div>
                 </div>
 
@@ -1511,27 +931,25 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
                         </button>
                     </div>
                     <div class="code-body">
-<pre><span class="cmt">// In your loop(), add this to enable serial commands:</span>
+<pre><span class="cmt">// In your loop(), enable serial commands:</span>
 <span class="kw">if</span> (Serial.<span class="fn">available</span>()) {
     String cmd = Serial.<span class="fn">readStringUntil</span>(<span class="str">'\n'</span>);
-    voltageSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// Handles "v12.5", "reset"</span>
-    currentSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// Handles "auto", "reset"</span>
+    voltageSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// "v12.5", "reset"</span>
+    currentSensor.<span class="fn">processCommand</span>(cmd);  <span class="cmt">// "auto", "reset"</span>
 }</pre>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================================================================
-             API REFERENCE
-             ================================================================ -->
-        <section id="api">
+        <!-- ============================================================
+             7. API REFERENCE
+             ============================================================ -->
+        <section id="api" style="background: var(--bg-secondary);">
             <div class="container">
-                <div class="section-label fade-in">Reference</div>
+                <div class="section-label fade-in" data-i18n="api_label">Reference</div>
                 <h2 class="section-title fade-in">API.</h2>
-                <p class="section-desc fade-in">Complete method reference for both sensor classes.</p>
 
-                <!-- IndustrialCurrent API -->
                 <div class="api-section fade-in">
                     <div class="api-class-name">IndustrialCurrent</div>
 
@@ -1539,93 +957,81 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">begin</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Initialize the sensor. Auto-detects ADC resolution, loads saved offset from persistent storage, seeds the Kalman filter.</div>
+                        <div class="api-method-desc">Initialize sensor. Auto-detects ADC resolution, loads saved offset, seeds Kalman filter.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">float</span> <span class="method-name">read</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Full pipeline: oversample → Kalman filter → convert to Amps → deadzone → auto-zero check. Returns filtered current in Amperes.</div>
+                        <div class="api-method-desc">Full pipeline: oversample → Kalman → convert → deadzone → auto-zero. Returns Amperes.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">float</span> <span class="method-name">readRaw</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Returns raw oversampled ADC value (before Kalman). Useful for diagnostics.</div>
+                        <div class="api-method-desc">Raw oversampled ADC value before Kalman. For diagnostics.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setKalmanProcessNoise</span><span class="params">(float Q)</span>
                             <span class="api-badge badge-advanced">Advanced</span>
                         </div>
-                        <div class="api-method-desc">Set process noise Q. Higher → trust measurements more (noisier output). Default: 0.01</div>
+                        <div class="api-method-desc">Process noise Q. Higher = trust measurements more (noisier). Default: 0.01</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setKalmanMeasurementNoise</span><span class="params">(float R)</span>
                             <span class="api-badge badge-advanced">Advanced</span>
                         </div>
-                        <div class="api-method-desc">Set measurement noise R. Higher → trust model more (smoother but slower). Default: 0.5</div>
+                        <div class="api-method-desc">Measurement noise R. Higher = trust model more (smoother, slower). Default: 0.5</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setKalmanInnovationThreshold</span><span class="params">(float rho)</span>
                             <span class="api-badge badge-advanced">Advanced</span>
                         </div>
-                        <div class="api-method-desc">Innovation threshold for adaptive skip. If |change| &lt; rho, skip full Kalman update. Set 0 to disable. Default: 0.5</div>
+                        <div class="api-method-desc">Skip Kalman update if |change| &lt; rho. Set 0 to disable. Default: 0.5</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setOversampleCount</span><span class="params">(uint16_t count)</span>
                         </div>
-                        <div class="api-method-desc">Number of ADC samples to average per read(). More = better resolution, slower. Default: 64</div>
+                        <div class="api-method-desc">ADC samples per read. More = better resolution, slower. Default: 64</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setDeadzone</span><span class="params">(float amps)</span>
                         </div>
-                        <div class="api-method-desc">Readings below this threshold are forced to 0.0A. Default: 0.20A</div>
+                        <div class="api-method-desc">Readings below threshold forced to 0.0A. Default: 0.20A</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">forceAutoZero</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Immediately recalibrate the zero offset using the current ADC reading.</div>
+                        <div class="api-method-desc">Immediately recalibrate zero offset from current ADC reading.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setCustomADCFunction</span><span class="params">(CustomADCReadFunc func)</span>
                             <span class="api-badge badge-advanced">Advanced</span>
                         </div>
-                        <div class="api-method-desc">Inject a custom ADC read function. Signature: <code>int myRead(uint8_t pin)</code>. For external ADCs like ADS1115.</div>
+                        <div class="api-method-desc">Inject custom ADC. Signature: <code>int myRead(uint8_t pin)</code>. For ADS1115 etc.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">saveCalibration</span><span class="params">()</span>
                             <span class="api-badge badge-persistence">Persistence</span>
                         </div>
-                        <div class="api-method-desc">Save current zero-offset to EEPROM/Preferences.</div>
+                        <div class="api-method-desc">Save zero-offset to EEPROM/Preferences.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">bool</span> <span class="method-name">processCommand</span><span class="params">(const String&amp; cmd)</span>
                         </div>
-                        <div class="api-method-desc">Parse and execute a calibration command string. Supports "auto" and "reset". Returns true if recognized.</div>
+                        <div class="api-method-desc">Parse calibration command. Supports "auto" and "reset". Returns true if recognized.</div>
                     </div>
                 </div>
 
-                <!-- IndustrialVoltage API -->
                 <div class="api-section fade-in">
                     <div class="api-class-name">IndustrialVoltage</div>
 
@@ -1633,30 +1039,26 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">begin</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Initialize the sensor. Loads calibration map, seeds EMA with initial reading.</div>
+                        <div class="api-method-desc">Initialize sensor. Loads calibration map, seeds EMA.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">float</span> <span class="method-name">read</span><span class="params">()</span>
                         </div>
-                        <div class="api-method-desc">Full pipeline: oversample → interpolation (or divider math) → EMA smooth. Returns voltage in Volts.</div>
+                        <div class="api-method-desc">Full pipeline: oversample → interpolation → EMA smooth. Returns Volts.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">bool</span> <span class="method-name">addCalibrationPoint</span><span class="params">(float realVoltage)</span>
                         </div>
-                        <div class="api-method-desc">Auto-reads current ADC and maps it to the given voltage. Array is auto-sorted. Returns false if map is full (10 points).</div>
+                        <div class="api-method-desc">Read current ADC, map to given voltage. Auto-sorted. Returns false if full (10 points).</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">setEmaAlpha</span><span class="params">(float alpha)</span>
                         </div>
-                        <div class="api-method-desc">Set EMA smoothing factor. Range (0, 1]. Higher = less smoothing. Default: 0.15</div>
+                        <div class="api-method-desc">EMA smoothing factor (0, 1]. Higher = less smoothing. Default: 0.15</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">void</span> <span class="method-name">saveCalibration</span><span class="params">()</span>
@@ -1664,59 +1066,57 @@ Max Input (3.3V ref) = 3.3 × 5.0 = 16.5 V</div>
                         </div>
                         <div class="api-method-desc">Save all calibration points to EEPROM/Preferences.</div>
                     </div>
-
                     <div class="api-method">
                         <div class="api-method-sig">
                             <span class="return-type">bool</span> <span class="method-name">processCommand</span><span class="params">(const String&amp; cmd)</span>
                         </div>
-                        <div class="api-method-desc">Parse a calibration command. Supports "v&lt;value&gt;" and "reset". Returns true if recognized.</div>
+                        <div class="api-method-desc">Parse command. Supports "v&lt;value&gt;" and "reset". Returns true if recognized.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================================================================
-             ARCHITECTURE
-             ================================================================ -->
-        <section style="background: var(--bg-secondary);">
+        <!-- ============================================================
+             8. ARCHITECTURE
+             ============================================================ -->
+        <section>
             <div class="container">
-                <div class="section-label fade-in">Internals</div>
-                <h2 class="section-title fade-in">Architecture.</h2>
-                <p class="section-desc fade-in">Clean OOP with separated concerns. No namespace pollution.</p>
+                <div class="section-label fade-in" data-i18n="arch_label">Internals</div>
+                <h2 class="section-title fade-in" data-i18n="arch_title">Architecture.</h2>
 
                 <div class="arch-visual fade-in">IndustrialSense/
 ├── library.properties          ← Arduino Library Manager metadata
 ├── keywords.txt                ← IDE syntax highlighting
 ├── src/
-│   ├── IndustrialSense.h       ← Public API surface (include this)
-│   ├── IndustrialCurrent.cpp   ← Adaptive Kalman + Auto-Zero + Deadzone
-│   ├── IndustrialVoltage.cpp   ← NL Interpolation + EMA Smoothing
+│   ├── IndustrialSense.h       ← Public API (include this)
+│   ├── IndustrialCurrent.cpp   ← Kalman + Auto-Zero + Deadzone
+│   ├── IndustrialVoltage.cpp   ← NL Interpolation + EMA
 │   └── StorageManager.h        ← ESP32 Preferences / AVR EEPROM
 └── examples/
-    ├── 01_Basic_Usage/         ← Level 1: 3-line simplicity
-    └── 02_Advanced_Calibration/← Level 2: Serial commands, Kalman tuning</div>
+    ├── 01_Basic_Usage/         ← 3-line quickstart
+    └── 02_Advanced_Calibration/← Serial commands, Kalman tuning</div>
 
                 <div class="divider"></div>
 
-                <div class="section-label fade-in">Signal Pipeline</div>
+                <div class="section-label fade-in" data-i18n="pipe_label">Signal Pipeline</div>
 
-                <div class="arch-visual fade-in" style="margin-top: var(--space-lg);">Current Sensor Pipeline:
-  ADC Pin → [Oversample 64×] → [Adaptive Kalman] → [ADC→Amps] → [Deadzone] → [Auto-Zero] → Output
+                <div class="arch-visual fade-in" style="margin-top: var(--space-lg);">Current Sensor:
+  ADC → [Oversample 64×] → [Adaptive Kalman] → [ADC→Amps] → [Deadzone] → [Auto-Zero] → Output
 
-Voltage Sensor Pipeline:
-  ADC Pin → [Oversample 32×] → [NL Interpolation / Divider Math] → [EMA Smooth] → Output
+Voltage Sensor:
+  ADC → [Oversample 32×] → [NL Interpolation / Divider Math] → [EMA Smooth] → Output
 
-Storage Pipeline:
+Storage:
   processCommand() → save() → ┌─ ESP32: Preferences (NVS)
                                └─ AVR:   EEPROM.update()</div>
             </div>
         </section>
 
-        <!-- ================================================================
-             BENEFITS & ROADMAP
-             ================================================================ -->
-        <section id="benefits">
-            <div class="container">
+        <!-- ============================================================
+             9. BENEFITS + ROADMAP
+             ============================================================ -->
+        <section id="benefits" style="background: var(--bg-secondary);">
+            <div class="container-wide">
                 <div class="section-label fade-in" data-i18n="ben_label">Benefits</div>
                 <h2 class="section-title fade-in" data-i18n="ben_title">What you actually get.</h2>
 
@@ -1724,17 +1124,17 @@ Storage Pipeline:
                     <div class="feature-card fade-in">
                         <div class="feature-icon">1</div>
                         <h3 data-i18n="ben_1_title">Ship faster</h3>
-                        <p data-i18n="ben_1_desc">Stop writing your own moving-average filter for the 10th time. Install the library and focus on your actual product logic.</p>
+                        <p data-i18n="ben_1_desc">Stop rewriting moving-average filters. Install and focus on your product.</p>
                     </div>
                     <div class="feature-card fade-in">
                         <div class="feature-icon">2</div>
-                        <h3 data-i18n="ben_2_title">Deploy with confidence</h3>
-                        <p data-i18n="ben_2_desc">Auto-zero and persistent calibration mean your sensor doesn't need babysitting after install. Set it up once, it runs for years.</p>
+                        <h3 data-i18n="ben_2_title">Deploy and forget</h3>
+                        <p data-i18n="ben_2_desc">Auto-zero + persistent calibration. Setup once, runs for years.</p>
                     </div>
                     <div class="feature-card fade-in">
                         <div class="feature-icon">3</div>
-                        <h3 data-i18n="ben_3_title">Grow without rewriting</h3>
-                        <p data-i18n="ben_3_desc">Start with analogRead() today, swap in an ADS1115 tomorrow. Same API, same pipeline. No refactoring, no breaking changes.</p>
+                        <h3 data-i18n="ben_3_title">Scale without rewriting</h3>
+                        <p data-i18n="ben_3_desc">Start with <code>analogRead()</code>, swap to ADS1115 later. Same API, zero refactoring.</p>
                     </div>
                 </div>
 
@@ -1742,34 +1142,31 @@ Storage Pipeline:
 
                 <div class="section-label fade-in" data-i18n="road_label">Roadmap</div>
                 <h2 class="section-title fade-in" data-i18n="road_title">What's next.</h2>
-                <p class="section-desc fade-in" data-i18n="road_desc">
-                    IndustrialSense is actively developed. Here's where we're headed.
-                </p>
 
                 <div class="cmd-grid fade-in">
                     <div class="cmd-item">
                         <span class="cmd-code">v1.1</span>
-                        <span class="cmd-desc" data-i18n="road_v11">AC current measurement support — true RMS calculation for CT sensors and ACS712 on mains power.</span>
+                        <span class="cmd-desc" data-i18n="road_v11">AC current. True RMS for CT sensors and ACS712 on mains.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">v1.2</span>
-                        <span class="cmd-desc" data-i18n="road_v12">Power calculation module — real-time Watts, kWh accumulation, and power factor estimation.</span>
+                        <span class="cmd-desc" data-i18n="road_v12">Power calculation. Real-time Watts, kWh, power factor.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">v1.3</span>
-                        <span class="cmd-desc" data-i18n="road_v13">Diagnostics mode — built-in noise floor analysis, calibration health check, and serial data export for debugging.</span>
+                        <span class="cmd-desc" data-i18n="road_v13">Diagnostics. Noise floor analysis, calibration health, serial export.</span>
                     </div>
                     <div class="cmd-item">
                         <span class="cmd-code">v2.0</span>
-                        <span class="cmd-desc" data-i18n="road_v20">Multi-channel support — monitor multiple sensors from a single manager class with shared calibration storage.</span>
+                        <span class="cmd-desc" data-i18n="road_v20">Multi-channel. One manager, many sensors, shared storage.</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================================================================
+        <!-- ============================================================
              FOOTER
-             ================================================================ -->
+             ============================================================ -->
         <footer class="footer">
             <div class="container">
                 <div class="footer-links">
@@ -1778,7 +1175,7 @@ Storage Pipeline:
                     <a href="https://github.com/nawawimegahertz/IndustrialSense/releases" target="_blank">Releases</a>
                 </div>
                 <p data-i18n="footer_text">
-                    IndustrialSense is an open-source project under the MIT License.<br>
+                    IndustrialSense is open-source under the MIT License.<br>
                     Made by <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>
                 </p>
             </div>
@@ -1789,244 +1186,189 @@ Storage Pipeline:
          JAVASCRIPT
          ================================================================ -->
     <script>
-        // ================================================================
-        //  i18n — TRANSLATION DICTIONARY
-        // ================================================================
+        // ==============================================================
+        //  TRANSLATIONS
+        // ==============================================================
         const translations = {
             en: {
-                // Nav
-                nav_features: 'Features',
                 nav_quickstart: 'Quick Start',
-                nav_sensors: 'Sensors',
+                nav_features: 'Features',
                 nav_api: 'API',
-                nav_commands: 'Commands',
 
-                // Hero
-                hero_badge: 'v1.0.0 · Available on Arduino Library Manager',
-                hero_title_1: 'Stop guessing',
-                hero_title_2: 'your sensor readings.',
-                hero_subtitle: 'Your ACS712 reads 0.3A when nothing is connected. Your voltage flickers between 12.4 and 12.7 on the LCD. IndustrialSense fixes all of that.',
+                hero_badge: 'v1.0 · Arduino Library Manager',
+                hero_title_1: 'Your sensor is',
+                hero_title_2: 'lying to you.',
+                hero_subtitle: 'ACS712 reads 0.3A with no load. Voltage jumps between 12.4 and 12.7 on the LCD. It\'s not the sensor. It\'s your code. IndustrialSense fixes that.',
+                hero_cta: 'Get Started',
 
-                // Features
-                feat_label: 'The problem',
-                feat_title: 'Raw <code>analogRead()</code> is never enough.',
-                feat_desc: "You've been there. ADC noise produces phantom readings, the sensor drifts after 30 minutes, and recalibration means reflashing the firmware every single time.",
-                feat_kalman_title: 'Adaptive Kalman Filter',
-                feat_kalman_desc: 'No more jittering at 0A. The filter locks onto stable readings and only reacts when real current changes happen, not when the ADC picks up noise from your motor driver.',
-                feat_cal_title: 'Multi-Point Calibration',
-                feat_cal_desc: "Your sensor isn't linear. We know. Add up to 10 reference points at known voltages and the library handles interpolation. No more hardcoded magic numbers.",
-                feat_storage_title: 'Persistent Storage',
-                feat_storage_desc: "Calibrated on-site? It stays. EEPROM on AVR, NVS on ESP32, all handled for you. Power cycle, firmware update, doesn't matter. Your calibration survives.",
-                feat_zero_title: 'Auto-Zero Compensation',
-                feat_zero_desc: "After 30 minutes your ACS712 offset drifts because of heat. IndustrialSense notices when you're at 0A for 5+ seconds and silently recalibrates itself.",
-                feat_oversample_title: '64× Oversampling',
-                feat_oversample_desc: "One ADC sample has ±2 LSB noise. We average 64. That gives you 3 extra bits of effective resolution. 13-bit accuracy from a 10-bit ADC, in under 1ms.",
-                feat_adc_title: 'Custom ADC Injection',
-                feat_adc_desc: 'Outgrew the built-in ADC? Pass a function pointer to your ADS1115 or MCP3008 read function. The whole pipeline keeps working. No library fork needed.',
-
-                // Comparison
-                cmp_label: 'Why this library',
-                cmp_title: 'Compared to the alternatives.',
-                cmp_desc: "There are other ways to read sensors. Here's why most of them fall apart when the environment gets noisy.",
-                cmp_th_feature: 'Feature',
-                cmp_th_raw: 'Raw <code>analogRead()</code>',
-                cmp_th_typical: 'Typical Libraries',
-                cmp_r1_feature: 'Noise filtering',
-                cmp_r1_typical: 'Simple averaging',
-                cmp_r1_is: '✅ Adaptive Kalman',
-                cmp_r2_feature: 'Zero-current stability',
-                cmp_r2_raw: '❌ Reads 0.2–0.5A',
-                cmp_r2_typical: '❌ Manual offset',
-                cmp_r2_is: '✅ Auto-zero + deadzone',
-                cmp_r3_feature: 'Thermal drift handling',
-                cmp_r3_is: '✅ Auto-recalibrates',
-                cmp_r4_feature: 'Non-linear correction',
-                cmp_r4_typical: '❌ Linear only',
-                cmp_r4_is: '✅ 10-point interpolation',
-                cmp_r5_feature: 'Calibration persistence',
-                cmp_r5_raw: '❌ Lost on reboot',
-                cmp_r5_typical: '❌ Manual EEPROM',
-                cmp_r5_is: '✅ Auto-save NVS/EEPROM',
-                cmp_r6_feature: 'Runtime calibration',
-                cmp_r6_raw: '❌ Reflash needed',
-                cmp_r6_is: '✅ Serial/MQTT commands',
-                cmp_r7_feature: 'Cross-platform storage',
-                cmp_r7_typical: 'ESP32 or AVR only',
-                cmp_r7_is: '✅ Both + fallback',
-                cmp_r8_feature: 'External ADC support',
-                cmp_r8_is: '✅ <i>Function pointer</i> injection',
-                cmp_r9_feature: 'Beginner-friendly',
-                cmp_r9_raw: '✅ But inaccurate',
-                cmp_r9_typical: '✅ But limited',
-                cmp_r9_is: '✅ 3 lines to start',
-
-                // Quick Start
                 qs_label: 'Quick Start',
-                qs_title: "Three lines. That's it.",
-                qs_desc: 'No config structs. No init sequences. No 200-line boilerplate. Declare, begin, read.',
-                qs_callout: '<strong>Under the hood,</strong> every <code>read()</code> call runs the full pipeline: oversample → filter → convert → deadzone → smooth. Lab-grade readings from a $2 sensor.',
+                qs_title: 'Three lines. Done.',
+                qs_desc: 'No config structs. No init sequences. Declare, begin, read.',
+                qs_callout: 'Every <code>read()</code> runs the full pipeline: oversample → filter → convert → deadzone → smooth. Lab-grade output from a $2 sensor.',
 
-                // Sensors
+                feat_label: 'The problem',
+                feat_title: 'Raw <code>analogRead()</code> is not enough.',
+                feat_desc: 'ADC noise. Thermal drift. Non-linear sensors. You know the drill. Here\'s what this library does about it.',
+                feat_kalman_title: 'Adaptive Kalman Filter',
+                feat_kalman_desc: 'Locks onto stable readings. Only reacts to real current changes, not ADC noise from your motor driver.',
+                feat_cal_title: 'Multi-Point Calibration',
+                feat_cal_desc: '10 reference points, auto-interpolation. Your sensor isn\'t linear and we don\'t pretend it is.',
+                feat_storage_title: 'Persistent Storage',
+                feat_storage_desc: 'EEPROM on AVR, NVS on ESP32. Calibration survives power cycles and firmware updates.',
+                feat_zero_title: 'Auto-Zero',
+                feat_zero_desc: 'Detects 0A for 5+ seconds, then silently recalibrates the offset. Handles thermal drift automatically.',
+                feat_over_title: '64× Oversampling',
+                feat_over_desc: '64 samples averaged per read. 3 extra bits of resolution. 13-bit accuracy from a 10-bit ADC, under 1ms.',
+                feat_adc_title: 'Custom ADC',
+                feat_adc_desc: 'Pass a function pointer to your ADS1115 or MCP3008. The pipeline keeps working. No fork needed.',
+
+                cmp_label: 'Why this library',
+                cmp_title: 'See the difference.',
+                cmp_th_feat: 'Feature',
+                cmp_th_raw: 'Raw <code>analogRead()</code>',
+                cmp_th_lib: 'Other Libraries',
+                cmp_r1c1: 'Noise filtering', cmp_r1c3: 'Simple averaging',
+                cmp_r2c1: 'Zero-current stability', cmp_r2c2: '✗ Reads 0.2–0.5A', cmp_r2c3: '✗ Manual offset',
+                cmp_r3c1: 'Thermal drift', cmp_r3c4: '✓ Auto-recalibrates',
+                cmp_r4c1: 'Non-linear correction', cmp_r4c3: '✗ Linear only', cmp_r4c4: '✓ 10-point interpolation',
+                cmp_r5c1: 'Calibration saved', cmp_r5c2: '✗ Lost on reboot', cmp_r5c3: '✗ Manual EEPROM',
+                cmp_r6c1: 'Runtime calibration', cmp_r6c2: '✗ Reflash needed',
+                cmp_r7c1: 'Cross-platform', cmp_r7c3: 'ESP32 or AVR only', cmp_r7c4: '✓ Both + fallback',
+                cmp_r8c1: 'External ADC', cmp_r8c4: '✓ Function pointer',
+                cmp_r9c1: 'Beginner-friendly', cmp_r9c2: '✓ But inaccurate', cmp_r9c3: '✓ But limited', cmp_r9c4: '✓ 3 lines to start',
+
                 hw_label: 'Supported Hardware',
-                hw_title: 'No datasheet lookup needed.',
-                hw_desc: 'Pass the enum, we load the sensitivity. Every profile is verified against the official Allegro datasheets.',
+                hw_title: 'No datasheet needed.',
+                hw_desc: 'Pass the enum. Sensitivity is loaded automatically.',
+                hw_th_sens: 'Sensitivity', hw_th_range: 'Range',
+                hw_wire_label: 'Wiring', hw_wire_title: 'Voltage Divider.',
 
-                // Commands
                 cmd_label: 'Runtime Calibration',
                 cmd_title: 'Calibrate without reflashing.',
-                cmd_desc: 'Already deployed? Connect via Serial, MQTT, or Bluetooth and calibrate on the spot. Changes persist across reboots.',
-                cmd_v125: 'Read current ADC value and map it to 12.5V. Saves to persistent storage automatically. Supports up to 10 calibration points.',
-                cmd_v0: 'Calibrate the zero-voltage reference point. Connect the input to GND, then send this command.',
-                cmd_auto: 'Force the current sensor to re-read its zero-offset right now. Compensates for thermal drift. Saves to EEPROM/NVS.',
-                cmd_reset: 'Clear all calibration data from RAM and persistent storage. Sensor returns to factory defaults.',
+                cmd_desc: 'Already deployed? Send commands over Serial, MQTT, or Bluetooth. Changes persist across reboots.',
+                cmd_v125: 'Map current ADC reading to 12.5V. Auto-saved. Up to 10 points.',
+                cmd_v0: 'Set zero-voltage reference. Connect input to GND first.',
+                cmd_auto: 'Force zero-offset recalibration now. Fixes thermal drift. Saved to EEPROM/NVS.',
+                cmd_reset: 'Wipe all calibration data. Back to factory defaults.',
 
-                // Benefits
+                api_label: 'Reference',
+                arch_label: 'Internals', arch_title: 'Architecture.',
+                pipe_label: 'Signal Pipeline',
+
                 ben_label: 'Benefits',
                 ben_title: 'What you actually get.',
                 ben_1_title: 'Ship faster',
-                ben_1_desc: 'Stop writing your own moving-average filter for the 10th time. Install the library and focus on your actual product logic.',
-                ben_2_title: 'Deploy with confidence',
-                ben_2_desc: "Auto-zero and persistent calibration mean your sensor doesn't need babysitting after install. Set it up once, it runs for years.",
-                ben_3_title: 'Grow without rewriting',
-                ben_3_desc: 'Start with analogRead() today, swap in an ADS1115 tomorrow. Same API, same pipeline. No refactoring, no breaking changes.',
+                ben_1_desc: 'Stop rewriting moving-average filters. Install and focus on your product.',
+                ben_2_title: 'Deploy and forget',
+                ben_2_desc: 'Auto-zero + persistent calibration. Setup once, runs for years.',
+                ben_3_title: 'Scale without rewriting',
+                ben_3_desc: 'Start with <code>analogRead()</code>, swap to ADS1115 later. Same API, zero refactoring.',
 
-                // Roadmap
                 road_label: 'Roadmap',
                 road_title: "What's next.",
-                road_desc: "IndustrialSense is actively maintained. Here's what we're building.",
-                road_v11: 'AC current measurement. True RMS calculation for CT sensors and ACS712 on mains power.',
-                road_v12: 'Power calculation module. Real-time Watts, kWh accumulation, and power factor estimation.',
-                road_v13: 'Diagnostics mode. Built-in noise floor analysis, calibration health check, and serial data export.',
-                road_v20: 'Multi-channel support. Monitor multiple sensors from a single manager class with shared storage.',
+                road_v11: 'AC current. True RMS for CT sensors and ACS712 on mains.',
+                road_v12: 'Power calculation. Real-time Watts, kWh, power factor.',
+                road_v13: 'Diagnostics. Noise floor analysis, calibration health, serial export.',
+                road_v20: 'Multi-channel. One manager, many sensors, shared storage.',
 
-                // Footer
-                footer_text: 'IndustrialSense is an open-source project under the MIT License.<br>Made by <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>',
+                footer_text: 'IndustrialSense is open-source under the MIT License.<br>Made by <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>',
             },
 
             id: {
-                // Nav
-                nav_features: 'Fitur',
                 nav_quickstart: 'Mulai',
-                nav_sensors: 'Sensor',
+                nav_features: 'Fitur',
                 nav_api: 'API',
-                nav_commands: 'Perintah',
 
-                // Hero
-                hero_badge: 'v1.0.0 · Tersedia di Arduino Library Manager',
-                hero_title_1: 'Berhenti nebak-nebak',
-                hero_title_2: 'pembacaan sensor kamu.',
-                hero_subtitle: 'ACS712 kamu nunjukin 0.3A padahal nggak ada beban. Tegangan di LCD loncat-loncat antara 12.4 dan 12.7. IndustrialSense bikin semua itu beres.',
+                hero_badge: 'v1.0 · Arduino Library Manager',
+                hero_title_1: 'Sensor kamu',
+                hero_title_2: 'bohong.',
+                hero_subtitle: 'ACS712 nunjukin 0.3A padahal nggak ada beban. Tegangan di LCD loncat-loncat antara 12.4 dan 12.7. Bukan sensornya yang rusak. Kodenya yang kurang. IndustrialSense benerin itu.',
+                hero_cta: 'Mulai Sekarang',
 
-                // Features
-                feat_label: 'Masalahnya',
-                feat_title: '<code>analogRead()</code> doang nggak pernah cukup.',
-                feat_desc: 'Pasti pernah ngalamin. ADC <i>noise</i> bikin pembacaan hantu muncul, sensor <i>drift</i> setelah setengah jam, dan kalibrasi ulang artinya harus <i>flash</i> ulang <i>firmware</i> tiap kali.',
-                feat_kalman_title: 'Adaptive Kalman Filter',
-                feat_kalman_desc: 'Nggak ada lagi angka goyang-goyang di 0A. <i>Filter</i> ini mengunci pembacaan stabil dan cuma bereaksi kalau ada perubahan arus beneran, bukan gara-gara <i>noise</i> dari <i>motor driver</i> kamu.',
-                feat_cal_title: 'Kalibrasi Multi-Titik',
-                feat_cal_desc: 'Sensor kamu nggak linear. Kita tahu. Tambahin sampai 10 titik referensi di tegangan yang kamu ukur sendiri, sisanya di-interpolasi otomatis. Nggak ada lagi angka ajaib <i>hardcode</i> di kode.',
-                feat_storage_title: 'Penyimpanan Permanen',
-                feat_storage_desc: 'Udah kalibrasi di lapangan? Datanya tetap aman. EEPROM di AVR, NVS di ESP32, semua otomatis. Mau mati listrik, <i>update firmware</i>, kalibrasi kamu tetap ada.',
-                feat_zero_title: 'Kompensasi <i>Auto-Zero</i>',
-                feat_zero_desc: 'Setelah 30 menit, <i>offset</i> ACS712 geser karena panas. IndustrialSense nyadar kalau arus 0A selama 5 detik lebih, lalu diam-diam kalibrasi ulang sendiri.',
-                feat_oversample_title: '<i>Oversampling</i> 64×',
-                feat_oversample_desc: 'Satu sampel ADC punya <i>noise</i> ±2 LSB. Kita rata-ratain 64 sampel. Hasilnya 3 bit ekstra resolusi efektif. Akurasi 13-bit dari ADC 10-bit, kurang dari 1ms.',
-                feat_adc_title: 'Injeksi ADC <i>Custom</i>',
-                feat_adc_desc: 'ADC bawaan udah nggak cukup? Lempar <i>function pointer</i> ke fungsi baca ADS1115 atau MCP3008 kamu. Seluruh <i>pipeline</i> tetap jalan. Nggak perlu <i>fork</i>.',
-
-                // Comparison
-                cmp_label: 'Kenapa library ini',
-                cmp_title: 'Bandingin sendiri.',
-                cmp_desc: 'Ada cara lain buat baca sensor. Tapi mayoritas gagal begitu kondisi lapangan beneran berisik.',
-                cmp_th_feature: 'Fitur',
-                cmp_th_raw: '<code>analogRead()</code> mentah',
-                cmp_th_typical: '<i>Library</i> lain',
-                cmp_r1_feature: '<i>Noise filtering</i>',
-                cmp_r1_typical: '<i>Averaging</i> biasa',
-                cmp_r1_is: '✅ Adaptive Kalman',
-                cmp_r2_feature: 'Stabilitas arus nol',
-                cmp_r2_raw: '❌ Baca 0.2–0.5A',
-                cmp_r2_typical: '❌ <i>Offset</i> manual',
-                cmp_r2_is: '✅ <i>Auto-zero</i> + <i>deadzone</i>',
-                cmp_r3_feature: 'Penanganan <i>drift</i> suhu',
-                cmp_r3_is: '✅ Kalibrasi otomatis',
-                cmp_r4_feature: 'Koreksi non-linear',
-                cmp_r4_typical: '❌ Linear saja',
-                cmp_r4_is: '✅ Interpolasi 10 titik',
-                cmp_r5_feature: 'Kalibrasi tersimpan',
-                cmp_r5_raw: '❌ Hilang saat <i>reboot</i>',
-                cmp_r5_typical: '❌ EEPROM manual',
-                cmp_r5_is: '✅ <i>Auto-save</i> NVS/EEPROM',
-                cmp_r6_feature: 'Kalibrasi saat jalan',
-                cmp_r6_raw: '❌ Harus <i>flash</i> ulang',
-                cmp_r6_is: '✅ Perintah Serial/MQTT',
-                cmp_r7_feature: '<i>Storage</i> lintas platform',
-                cmp_r7_typical: 'ESP32 atau AVR saja',
-                cmp_r7_is: '✅ Keduanya + <i>fallback</i>',
-                cmp_r8_feature: 'Dukungan ADC eksternal',
-                cmp_r8_is: '✅ Injeksi <i>function pointer</i>',
-                cmp_r9_feature: 'Ramah pemula',
-                cmp_r9_raw: '✅ Tapi nggak akurat',
-                cmp_r9_typical: '✅ Tapi terbatas',
-                cmp_r9_is: '✅ 3 baris langsung jalan',
-
-                // Quick Start
                 qs_label: 'Mulai Cepat',
-                qs_title: 'Tiga baris. Udah.',
-                qs_desc: 'Tanpa <i>config struct</i>. Tanpa urutan inisialisasi ribet. Tanpa <i>boilerplate</i> 200 baris. Deklarasi, <i>begin</i>, <i>read</i>.',
-                qs_callout: '<strong>Di balik layar,</strong> setiap panggilan <code>read()</code> menjalankan <i>pipeline</i> lengkap: <i>oversample</i> → <i>filter</i> → konversi → <i>deadzone</i> → <i>smooth</i>. Pembacaan kelas lab dari sensor seharga Rp30.000.',
+                qs_title: 'Tiga baris. Beres.',
+                qs_desc: 'Tanpa <i>config struct</i>. Tanpa urutan inisialisasi. Deklarasi, <i>begin</i>, <i>read</i>.',
+                qs_callout: 'Setiap <code>read()</code> jalanin <i>pipeline</i> penuh: <i>oversample</i> → <i>filter</i> → konversi → <i>deadzone</i> → <i>smooth</i>. Hasil kelas lab dari sensor Rp30.000-an.',
 
-                // Sensors
+                feat_label: 'Masalahnya',
+                feat_title: '<code>analogRead()</code> doang nggak cukup.',
+                feat_desc: '<i>Noise</i> ADC. <i>Drift</i> suhu. Sensor non-linear. Udah biasa kan? Ini yang <i>library</i> ini lakuin.',
+                feat_kalman_title: 'Adaptive Kalman Filter',
+                feat_kalman_desc: 'Mengunci pembacaan stabil. Cuma bereaksi ke perubahan arus beneran, bukan <i>noise</i> dari <i>motor driver</i>.',
+                feat_cal_title: 'Kalibrasi Multi-Titik',
+                feat_cal_desc: '10 titik referensi, interpolasi otomatis. Sensor kamu nggak linear dan kita nggak pura-pura iya.',
+                feat_storage_title: 'Penyimpanan Permanen',
+                feat_storage_desc: 'EEPROM di AVR, NVS di ESP32. Kalibrasi tetap aman walau mati listrik atau <i>update firmware</i>.',
+                feat_zero_title: '<i>Auto-Zero</i>',
+                feat_zero_desc: 'Deteksi arus 0A selama 5+ detik, lalu kalibrasi ulang <i>offset</i> diam-diam. <i>Drift</i> suhu ditangani otomatis.',
+                feat_over_title: '<i>Oversampling</i> 64×',
+                feat_over_desc: '64 sampel dirata-ratain. 3 bit ekstra resolusi. Akurasi 13-bit dari ADC 10-bit, di bawah 1ms.',
+                feat_adc_title: 'ADC <i>Custom</i>',
+                feat_adc_desc: 'Lempar <i>function pointer</i> ke ADS1115 atau MCP3008 kamu. <i>Pipeline</i> tetap jalan. Tanpa <i>fork</i>.',
+
+                cmp_label: 'Kenapa <i>library</i> ini',
+                cmp_title: 'Bandingin sendiri.',
+                cmp_th_feat: 'Fitur',
+                cmp_th_raw: '<code>analogRead()</code> mentah',
+                cmp_th_lib: '<i>Library</i> lain',
+                cmp_r1c1: '<i>Noise filtering</i>', cmp_r1c3: '<i>Averaging</i> biasa',
+                cmp_r2c1: 'Stabilitas arus nol', cmp_r2c2: '✗ Baca 0.2–0.5A', cmp_r2c3: '✗ <i>Offset</i> manual',
+                cmp_r3c1: '<i>Drift</i> suhu', cmp_r3c4: '✓ Kalibrasi otomatis',
+                cmp_r4c1: 'Koreksi non-linear', cmp_r4c3: '✗ Linear saja', cmp_r4c4: '✓ Interpolasi 10 titik',
+                cmp_r5c1: 'Kalibrasi tersimpan', cmp_r5c2: '✗ Hilang pas <i>reboot</i>', cmp_r5c3: '✗ EEPROM manual',
+                cmp_r6c1: 'Kalibrasi saat jalan', cmp_r6c2: '✗ Harus <i>flash</i> ulang',
+                cmp_r7c1: 'Lintas platform', cmp_r7c3: 'ESP32 atau AVR saja', cmp_r7c4: '✓ Dua-duanya + <i>fallback</i>',
+                cmp_r8c1: 'ADC eksternal', cmp_r8c4: '✓ <i>Function pointer</i>',
+                cmp_r9c1: 'Ramah pemula', cmp_r9c2: '✓ Tapi nggak akurat', cmp_r9c3: '✓ Tapi terbatas', cmp_r9c4: '✓ 3 baris langsung jalan',
+
                 hw_label: '<i>Hardware</i> yang Didukung',
                 hw_title: 'Nggak perlu buka <i>datasheet</i>.',
-                hw_desc: 'Kasih <i>enum</i>-nya, sensitivitas langsung ke-<i>load</i>. Setiap profil udah diverifikasi dari <i>datasheet</i> resmi Allegro.',
+                hw_desc: 'Kasih <i>enum</i>-nya, sensitivitas langsung ke-<i>load</i>.',
+                hw_th_sens: 'Sensitivitas', hw_th_range: 'Rentang',
+                hw_wire_label: 'Wiring', hw_wire_title: '<i>Voltage Divider</i>.',
 
-                // Commands
                 cmd_label: 'Kalibrasi <i>Runtime</i>',
                 cmd_title: 'Kalibrasi tanpa <i>flash</i> ulang.',
-                cmd_desc: 'Udah di-<i>deploy</i> di lapangan? Sambungin lewat Serial, MQTT, atau Bluetooth, lalu kalibrasi langsung di tempat. Perubahannya bertahan setelah <i>reboot</i>.',
-                cmd_v125: 'Baca nilai ADC saat ini dan petakan ke 12.5V. Otomatis tersimpan di <i>storage</i> permanen. Mendukung sampai 10 titik kalibrasi.',
-                cmd_v0: 'Kalibrasi titik referensi tegangan nol. Sambungkan input ke GND, lalu kirim perintah ini.',
-                cmd_auto: 'Paksa sensor arus membaca ulang <i>zero-offset</i> sekarang juga. Kompensasi <i>drift</i> suhu. Tersimpan ke EEPROM/NVS.',
-                cmd_reset: 'Hapus semua data kalibrasi dari RAM dan <i>storage</i> permanen. Sensor kembali ke setelan pabrik.',
+                cmd_desc: 'Udah di-<i>deploy</i>? Kirim perintah lewat Serial, MQTT, atau Bluetooth. Perubahannya tetap tersimpan.',
+                cmd_v125: 'Petakan pembacaan ADC ke 12.5V. Otomatis tersimpan. Sampai 10 titik.',
+                cmd_v0: 'Set referensi tegangan nol. Sambungkan input ke GND dulu.',
+                cmd_auto: 'Paksa kalibrasi ulang <i>zero-offset</i> sekarang. Kompensasi <i>drift</i> suhu. Disimpan ke EEPROM/NVS.',
+                cmd_reset: 'Hapus semua data kalibrasi. Kembali ke setelan pabrik.',
 
-                // Benefits
+                api_label: 'Referensi',
+                arch_label: 'Internal', arch_title: 'Arsitektur.',
+                pipe_label: '<i>Signal Pipeline</i>',
+
                 ben_label: 'Manfaat',
                 ben_title: 'Yang beneran kamu dapet.',
                 ben_1_title: 'Produk lebih cepat rilis',
-                ben_1_desc: 'Berhenti nulis <i>filter moving-average</i> sendiri buat yang ke-10 kalinya. <i>Install</i>, terus fokus ke logika produk kamu.',
-                ben_2_title: '<i>Deploy</i> tanpa was-was',
-                ben_2_desc: '<i>Auto-zero</i> dan kalibrasi permanen bikin sensor kamu nggak perlu diawasi setelah dipasang. <i>Setup</i> sekali, jalan bertahun-tahun.',
+                ben_1_desc: 'Berhenti nulis <i>filter</i> sendiri. <i>Install</i>, fokus ke produk.',
+                ben_2_title: '<i>Deploy</i>, tinggal pergi',
+                ben_2_desc: '<i>Auto-zero</i> + kalibrasi permanen. <i>Setup</i> sekali, jalan bertahun-tahun.',
                 ben_3_title: 'Skalakan tanpa tulis ulang',
-                ben_3_desc: 'Mulai pakai <code>analogRead()</code> hari ini, ganti ke ADS1115 besok. API sama, <i>pipeline</i> sama. Tanpa <i>refactoring</i>.',
+                ben_3_desc: 'Mulai pakai <code>analogRead()</code> hari ini, ganti ADS1115 besok. API sama, tanpa <i>refactoring</i>.',
 
-                // Roadmap
                 road_label: 'Peta Jalan',
                 road_title: 'Yang lagi kami garap.',
-                road_desc: 'IndustrialSense terus dikembangkan. Ini yang sedang kami kerjakan.',
-                road_v11: 'Pengukuran arus AC. Kalkulasi <i>true RMS</i> untuk sensor CT dan ACS712 di listrik PLN.',
-                road_v12: 'Modul kalkulasi daya. Watt <i>real-time</i>, akumulasi kWh, dan estimasi <i>power factor</i>.',
-                road_v13: 'Mode diagnostik. Analisis <i>noise floor</i>, <i>health check</i> kalibrasi, dan ekspor data serial buat <i>debugging</i>.',
-                road_v20: 'Dukungan multi-<i>channel</i>. Monitor banyak sensor dari satu <i>class manager</i> dengan penyimpanan bersama.',
+                road_v11: 'Arus AC. <i>True RMS</i> buat sensor CT dan ACS712 di listrik PLN.',
+                road_v12: 'Kalkulasi daya. Watt <i>real-time</i>, kWh, <i>power factor</i>.',
+                road_v13: 'Diagnostik. Analisis <i>noise floor</i>, <i>health check</i>, ekspor serial.',
+                road_v20: 'Multi-<i>channel</i>. Satu <i>manager</i>, banyak sensor, penyimpanan bersama.',
 
-                // Footer
                 footer_text: 'IndustrialSense adalah proyek <i>open-source</i> di bawah Lisensi MIT.<br>Dibuat oleh <a href="https://github.com/nawawimegahertz" target="_blank">nawawimegahertz</a>',
             }
         };
 
-        // ================================================================
-        //  i18n — LANGUAGE ENGINE
-        // ================================================================
+        // ==============================================================
+        //  i18n ENGINE
+        // ==============================================================
         let currentLang = 'en';
 
         function detectLanguage() {
-            // Priority: localStorage > navigator.language > default 'en'
             const saved = localStorage.getItem('lang');
             if (saved && translations[saved]) return saved;
-
-            const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-            // Match 'id', 'id-ID', 'in' (old Indonesian code)
-            if (browserLang.startsWith('id') || browserLang.startsWith('in')) return 'id';
+            const bl = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+            if (bl.startsWith('id') || bl.startsWith('in')) return 'id';
             return 'en';
         }
 
@@ -2035,7 +1377,6 @@ Storage Pipeline:
             currentLang = lang;
             localStorage.setItem('lang', lang);
 
-            // Update all translatable elements (innerHTML for HTML support)
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key] !== undefined) {
@@ -2043,81 +1384,55 @@ Storage Pipeline:
                 }
             });
 
-            // Update HTML lang attribute
             document.documentElement.setAttribute('lang', lang);
-
-            // Update nav label with flag
             document.getElementById('currentLangLabel').innerHTML = lang === 'id' ? '🇮🇩' : '🇬🇧';
 
-            // Update dropdown active state
-            document.querySelectorAll('.lang-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            const activeOpt = document.querySelector(`.lang-option[onclick="setLanguage('${lang}')"]`);
-            if (activeOpt) activeOpt.classList.add('active');
-
-            // Close dropdown
+            document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+            const active = document.querySelector(`.lang-option[onclick="setLanguage('${lang}')"]`);
+            if (active) active.classList.add('active');
             document.getElementById('langDropdown').classList.remove('open');
         }
 
         function toggleLangMenu() {
-            const dropdown = document.getElementById('langDropdown');
-            dropdown.classList.toggle('open');
+            document.getElementById('langDropdown').classList.toggle('open');
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.lang-switcher')) {
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.lang-switcher'))
                 document.getElementById('langDropdown').classList.remove('open');
-            }
         });
 
-        // ----------------------------------------------------------------
-        //  THEME TOGGLE
-        // ----------------------------------------------------------------
+        // ==============================================================
+        //  THEME
+        // ==============================================================
         function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
+            const d = document.documentElement;
+            const next = d.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            d.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
             updateThemeIcons(next);
         }
 
-        function updateThemeIcons(theme) {
-            const sun = document.querySelector('.icon-sun');
-            const moon = document.querySelector('.icon-moon');
-            if (theme === 'dark') {
-                sun.style.display = 'none';
-                moon.style.display = 'block';
-            } else {
-                sun.style.display = 'block';
-                moon.style.display = 'none';
-            }
+        function updateThemeIcons(t) {
+            document.querySelector('.icon-sun').style.display = t === 'dark' ? 'none' : 'block';
+            document.querySelector('.icon-moon').style.display = t === 'dark' ? 'block' : 'none';
         }
 
-        // ----------------------------------------------------------------
-        //  INIT — Load saved preferences on page load
-        // ----------------------------------------------------------------
+        // ==============================================================
+        //  INIT
+        // ==============================================================
         (function() {
-            // Theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                updateThemeIcons(savedTheme);
-            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                updateThemeIcons('dark');
+            const t = localStorage.getItem('theme');
+            if (t) { document.documentElement.setAttribute('data-theme', t); updateThemeIcons(t); }
+            else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark'); updateThemeIcons('dark');
             }
-
-            // Language — auto-detect from browser or load saved preference
-            const detectedLang = detectLanguage();
-            setLanguage(detectedLang);
+            setLanguage(detectLanguage());
         })();
 
-        // ----------------------------------------------------------------
-        //  COPY FUNCTIONALITY
-        // ----------------------------------------------------------------
+        // ==============================================================
+        //  COPY
+        // ==============================================================
         function copyInstall(el) {
             navigator.clipboard.writeText('IndustrialSense');
             el.classList.add('copied');
@@ -2125,8 +1440,7 @@ Storage Pipeline:
         }
 
         function copyCode(btn) {
-            const codeBlock = btn.closest('.code-block');
-            const code = codeBlock.querySelector('pre').textContent;
+            const code = btn.closest('.code-block').querySelector('pre').textContent;
             navigator.clipboard.writeText(code);
             btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
             setTimeout(() => {
@@ -2134,47 +1448,32 @@ Storage Pipeline:
             }, 1500);
         }
 
-        // ----------------------------------------------------------------
+        // ==============================================================
         //  SCROLL ANIMATIONS
-        // ----------------------------------------------------------------
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -40px 0px'
-        });
+        // ==============================================================
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
-        // ----------------------------------------------------------------
-        //  SMOOTH SCROLL for nav links
-        // ----------------------------------------------------------------
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // ==============================================================
+        //  SMOOTH SCROLL
+        // ==============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = 60;
-                    const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: position, behavior: 'smooth' });
-                }
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - 60, behavior: 'smooth' });
             });
         });
 
-        // ----------------------------------------------------------------
-        //  NAV BACKGROUND on scroll
-        // ----------------------------------------------------------------
+        // ==============================================================
+        //  NAV SCROLL EFFECT
+        // ==============================================================
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('.nav');
-            if (window.scrollY > 10) {
-                nav.style.borderBottomColor = 'var(--border-primary)';
-            } else {
-                nav.style.borderBottomColor = 'var(--border-subtle)';
-            }
+            document.querySelector('.nav').style.borderBottomColor =
+                window.scrollY > 10 ? 'var(--border-primary)' : 'var(--border-subtle)';
         });
     </script>
 </body>
