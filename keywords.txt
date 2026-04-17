@@ -1,0 +1,46 @@
+# =============================================================================
+# IndustrialSense Library - Arduino IDE Syntax Highlighting Keywords
+# =============================================================================
+# Syntax:
+#   KEYWORD1  -> Classes / Data Types (orange in IDE)
+#   KEYWORD2  -> Methods / Functions  (brown in IDE)
+#   LITERAL1  -> Constants / Enums    (blue in IDE)
+# =============================================================================
+
+# --- Classes (KEYWORD1) ---
+IndustrialCurrent	KEYWORD1
+IndustrialVoltage	KEYWORD1
+
+# --- Methods (KEYWORD2) ---
+begin	KEYWORD2
+read	KEYWORD2
+readRaw	KEYWORD2
+getRaw	KEYWORD2
+getCurrent	KEYWORD2
+getVoltage	KEYWORD2
+getFilteredVoltage	KEYWORD2
+setCustomADCFunction	KEYWORD2
+setAdcResolution	KEYWORD2
+setAdcVoltageRef	KEYWORD2
+setKalmanProcessNoise	KEYWORD2
+setKalmanMeasurementNoise	KEYWORD2
+setKalmanInnovationThreshold	KEYWORD2
+setOversampleCount	KEYWORD2
+setDeadzone	KEYWORD2
+setAutoZeroInterval	KEYWORD2
+forceAutoZero	KEYWORD2
+addCalibrationPoint	KEYWORD2
+clearCalibration	KEYWORD2
+getCalibrationPointCount	KEYWORD2
+setEmaAlpha	KEYWORD2
+processCommand	KEYWORD2
+saveCalibration	KEYWORD2
+loadCalibration	KEYWORD2
+resetCalibration	KEYWORD2
+
+# --- Sensor Model Enums (LITERAL1) ---
+ACS712_05A	LITERAL1
+ACS712_20A	LITERAL1
+ACS712_30A	LITERAL1
+ACS758_50B	LITERAL1
+ACS758_100U	LITERAL1
